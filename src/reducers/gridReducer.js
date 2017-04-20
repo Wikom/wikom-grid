@@ -97,6 +97,9 @@ const gridReducer = (state = {}, action) => {
 
             let value = [].concat(JSON.parse(action.value));
 
+            const availableIds = gridState[action.name].data.map(row => row.id);
+            value = value.filter(v => availableIds.indexOf(v) !== -1);
+
             if (action.checked) {
                 gridState[action.name].selection = gridState[action.name].selection
                     .concat(value)
