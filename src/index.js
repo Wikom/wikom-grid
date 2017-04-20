@@ -12,6 +12,7 @@ import GridLink from './components/GridLink'
 import GridFilter from './components/GridFilter'
 import Filter from './components/Filter'
 import gridReducer from './reducers/gridReducer'
+import * as gridActions from './actions'
 
 export default Grid
-export {Grid, ConnectedGrid, Columns, Column, ColTypes, GridAction, GridLink, GridFilter, Filter, gridReducer}
+export {Grid, ConnectedGrid, Columns, Column, ColTypes, GridAction, GridLink, GridFilter, Filter, gridReducer, gridActions}
