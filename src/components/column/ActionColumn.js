@@ -13,12 +13,16 @@ const createActions = (children, rowData, idx) => {
     return React.Children.map(children, (child) => {
         if (React.isValidElement(child) && child.type === GridAction) {
             return React.cloneElement(child, {
-                action: () => child.props.action(findInObject(idx, rowData))
+                action: () => child.props.action(findInObject(idx, rowData)),
+                rowData,
+                idx
             })
         }
         if (React.isValidElement(child) && child.type === GridLink) {
             return React.cloneElement(child, {
-                to: child.props.to + '/' + findInObject(idx, rowData)
+                to: child.props.to + '/' + findInObject(idx, rowData),
+                rowData,
+                idx
             })
         }
     });

@@ -2216,6 +2216,10 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+"react-conditional@https://github.com/Wikom/react-conditional.git":
+  version "1.0.0"
+  resolved "https://github.com/Wikom/react-conditional.git#f9498345d71b80f73f459d310de906eda287e6af"
+
 "react-loading@https://github.com/Wikom/react-loading.git":
   version "1.0.0"
   resolved "https://github.com/Wikom/react-loading.git#90602d18537c3cebf0fea79079208c6151536515"

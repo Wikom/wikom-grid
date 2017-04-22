@@ -48,6 +48,7 @@ module.exports = {
         "prop-types": "prop-types",
         "query-string": "query-string",
         "react": "react",
+        "react-conditional": "react-conditional",
         "react-dom": "react-dom",
         "react-loading": "react-loading",
         "react-pager": "react-pager",
