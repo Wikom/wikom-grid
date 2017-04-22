@@ -2217,8 +2217,8 @@ rc@^1.1.7:
     strip-json-comments "~2.0.1"
 
 "react-conditional@https://github.com/Wikom/react-conditional.git":
-  version "1.0.0"
-  resolved "https://github.com/Wikom/react-conditional.git#f9498345d71b80f73f459d310de906eda287e6af"
+  version "1.0.1"
+  resolved "https://github.com/Wikom/react-conditional.git#211866ad9176da4fb8383e836f8145a9dba6a5e2"
 
 "react-loading@https://github.com/Wikom/react-loading.git":
   version "1.0.0"

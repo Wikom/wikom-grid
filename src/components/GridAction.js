@@ -13,7 +13,9 @@ const GridAction = ({symbol, action}) =>
     </a>;
 
 const GridActionWrapper = ({condition, ...props}) =>
-    <Conditional condition={condition} Component={<GridAction {...props}/>}/>;
+    <Conditional condition={condition}>
+        <GridAction {...props}/>
+    </Conditional>;
 
 GridActionWrapper.defaultProps = {
     condition: () => true
