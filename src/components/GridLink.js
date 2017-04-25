@@ -14,8 +14,8 @@ const GridLink = ({symbol, to}) =>
     </Link>;
 
 const GridLinkWrapper = ({condition, ...props}) =>
-    <Conditional condition={condition}>
-        <GridLink {...props}/>
+    <Conditional condition={condition} {...props} passProps={true}>
+        <GridLink/>
     </Conditional>;
 
 GridLinkWrapper.defaultProps = {
