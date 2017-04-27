@@ -5,11 +5,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import findInObject from 'find-in-object'
+import moment from 'moment'
 import BaseColumn from './BaseColumn'
 
 const DateColumn = ({name, rowData, idx, ...rest}) =>
     <BaseColumn {...rest}>
-        {(new Date(findInObject(idx, rowData))).toLocaleDateString()}
+        {moment.utc(findInObject(idx, rowData)).format('DD.MM.YYYY')}
     </BaseColumn>;
 
 DateColumn.propTypes = {

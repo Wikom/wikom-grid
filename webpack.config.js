@@ -30,6 +30,7 @@ module.exports = {
     devtool: 'source-map',
     externals: {
         "find-in-object": "find-in-object",
+        "moment": "moment",
         "prop-types": "prop-types",
         "query-string": "query-string",
         "react": "react",
