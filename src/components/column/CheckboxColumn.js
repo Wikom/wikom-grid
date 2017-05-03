@@ -10,8 +10,8 @@ import findInObject from 'find-in-object'
 import BaseColumn from './BaseColumn'
 import {changeSelection} from '../../actions'
 
-const CheckboxColumn = ({rowData, idx, checked, onChange, ...rest}) =>
-    <BaseColumn {...rest} className="text-center">
+const CheckboxColumn = ({rowData, idx, checked, onChange, className, ...rest}) =>
+    <BaseColumn {...rest} className={(className ? className + ' ' : '') + 'text-center table__check-bulk'}>
         <input
             type="checkbox"
             name="row-is-selected"
