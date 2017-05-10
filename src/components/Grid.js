@@ -86,6 +86,7 @@ class Grid extends React.Component {
             handleSort={handleSort}
             activeSort={activeSort}
         />;
+        const className = this.props.className || "table table-striped table-hover table-bordered table-condensed";
 
         return (
             <div className="grid-view">
@@ -98,7 +99,7 @@ class Grid extends React.Component {
                                 <div className="table-grid">
                                     <div className="table-responsive">
                                         <table
-                                            className="table table-striped table-hover table-bordered table-condensed">
+                                            className={className}>
                                             <thead>
                                             {header}
                                             </thead>
