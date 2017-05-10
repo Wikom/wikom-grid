@@ -1169,8 +1169,8 @@ find-cache-dir@^0.1.1:
     pkg-dir "^1.0.0"
 
 "find-in-object@https://github.com/Wikom/find-in-object.git":
-  version "1.0.2"
-  resolved "https://github.com/Wikom/find-in-object.git#2be57c06a52c2a329e4168f0aa9d5385d3d0aa4b"
+  version "1.0.5"
+  resolved "https://github.com/Wikom/find-in-object.git#325f250a62e730b470181e4358bea4661b7350b8"
 
 find-up@^1.0.0:
   version "1.1.2"

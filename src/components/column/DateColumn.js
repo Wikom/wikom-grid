@@ -18,7 +18,9 @@ const DateColumn = ({name, rowData, idx, format, ...rest}) => {
 };
 
 DateColumn.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object]).isRequired,
     rowData: PropTypes.object,
     idx: PropTypes.oneOfType([
         PropTypes.number,

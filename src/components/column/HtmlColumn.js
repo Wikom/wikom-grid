@@ -13,7 +13,9 @@ const HtmlColumn = ({name, rowData, idx, ...rest}) =>
     </BaseColumn>;
 
 HtmlColumn.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object]).isRequired,
     rowData: PropTypes.object,
     idx: PropTypes.oneOfType([
         PropTypes.number,

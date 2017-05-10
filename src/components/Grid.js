@@ -72,7 +72,7 @@ class Grid extends React.Component {
             ? <FullRow colSpan={this._columns.length}><Loading/></FullRow>
             : (
                 data && data.length > 0
-                    ? data.map((rowData) => <Row rowData={rowData} key={rowData.id} grid={grid}>{this._columns}</Row>)
+                    ? data.map((rowData, i) => <Row rowData={rowData} key={i} grid={grid}>{this._columns}</Row>)
                     : <FullRow colSpan={this._columns.length}>Keine Ergebnisse vorhanden</FullRow>
             );
     }
