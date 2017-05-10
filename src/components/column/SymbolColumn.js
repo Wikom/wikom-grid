@@ -19,7 +19,9 @@ const SymbolColumn = ({name, rowData, idx, symbols, ...rest}) => {
 };
 
 SymbolColumn.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object]).isRequired,
     rowData: PropTypes.object,
     idx: PropTypes.oneOfType([
         PropTypes.number,

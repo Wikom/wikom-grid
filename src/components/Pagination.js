@@ -10,7 +10,7 @@ import paginationType from './propTypes/pagination'
 
 import {changePage, changePageSize} from '../actions'
 
-const renderPageSizeOptions = (pageSizes = [5, 10, 20, 50]) =>
+const renderPageSizeOptions = (pageSizes = [5, 10, 25, 50]) =>
     pageSizes.map((value, i) => <option {...value} key={'psso_' + i}>{value}</option>);
 
 const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePageChanged, handlePageSizeChanged}) =>
