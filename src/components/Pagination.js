@@ -16,7 +16,7 @@ const renderPageSizeOptions = (pageSizes = [5, 10, 25, 50]) =>
 const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePageChanged, handlePageSizeChanged}) =>
     <div className="row grid-before-table">
         <div className="col-md-3">
-            <div className="grid-filter" style={{lineHeight: "28px", color: "#777"}}>
+            <div className="grid-filter">
                 {totalCount} Zeile(n)
             </div>
         </div>
