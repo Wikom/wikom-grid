@@ -16,7 +16,7 @@ const renderPageSizeOptions = (pageSizes = [5, 10, 25, 50]) =>
 const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePageChanged, handlePageSizeChanged}) =>
     <div className="row grid-before-table">
         <div className="col-md-3">
-            <div className="grid-filter">
+            <div className="grid-filter grid-filter--entries">
                 {totalCount} Zeile(n)
             </div>
         </div>
@@ -38,7 +38,7 @@ const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePa
             </div>
         </div>
         <div className="col-md-3 text-right">
-            <div className="grid-filter">
+            <div className="grid-filter grid-filter--entries-per-page">
                 <div className="form-inline">
                     <label htmlFor="pagesizeSelect">Einträge pro Seite:</label>
                     <select
