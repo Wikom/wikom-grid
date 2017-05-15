@@ -10,7 +10,7 @@ import Row from './Row'
 import Header from './Header'
 import FullRow from './FullRow'
 import Loading from 'react-loading'
-import Pagination from './Pagination'
+import Pagination, {PAGINATION_COUNT_FORMAT_SHORT} from './Pagination'
 import {initializeGrid, destroyGrid, changeData} from '../actions'
 import paginationType from './propTypes/pagination'
 
@@ -78,7 +78,7 @@ class Grid extends React.Component {
     }
 
     render() {
-        const {grid, pagination, handleSort, activeSort, actions} = this.props;
+        const {grid, pagination, handleSort, activeSort, actions, pageSizes, paginationAfterGrid, paginationCountFormat} = this.props;
         const hasPagination = pagination && grid;
         const header = <Header
             grid={grid}
@@ -93,7 +93,11 @@ class Grid extends React.Component {
                 <div className="box">
                     <div className="box-body">
                         {actions}
-                        {hasPagination ? <Pagination grid={grid} {...pagination}/> : null}
+                        {
+                            hasPagination && paginationAfterGrid === false
+                                ? <Pagination grid={grid} pageSizes={pageSizes} paginationCountFormat={paginationCountFormat} {...pagination}/>
+                                : null
+                        }
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="table-grid">
@@ -111,6 +115,11 @@ class Grid extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        {
+                            hasPagination && paginationAfterGrid === true
+                                ? <Pagination grid={grid} pageSizes={pageSizes} paginationCountFormat={paginationCountFormat} {...pagination}/>
+                                : null
+                        }
                     </div>
                 </div>
             </div>
@@ -118,20 +127,29 @@ class Grid extends React.Component {
     }
 }
 
-Grid.propTypes = {
-    children: PropTypes.node,
-    data: PropTypes.arrayOf(PropTypes.object),
-    isLoading: PropTypes.bool.isRequired,
-    pagination: PropTypes.shape(paginationType),
-    grid: PropTypes.string.isRequired,
-    initializeGrid: PropTypes.func.isRequired,
-    destroyGrid: PropTypes.func.isRequired
-};
-
 const mapDispatchToProps = dispatch => ({
     initializeGrid: grid => dispatch(initializeGrid(grid)),
     destroyGrid: grid => dispatch(destroyGrid(grid)),
     changeData: (grid, data) => dispatch(changeData(grid, data))
 });
 
-export default connect(null, mapDispatchToProps)(Grid);
+const GridContainer = connect(null, mapDispatchToProps)(Grid);
+
+GridContainer.defaultProps = {
+    pageSizes: [10, 20, 50],
+    paginationAfterGrid: false,
+    paginationCountFormat: PAGINATION_COUNT_FORMAT_SHORT
+};
+
+GridContainer.propTypes = {
+    children: PropTypes.node,
+    data: PropTypes.arrayOf(PropTypes.object),
+    isLoading: PropTypes.bool.isRequired,
+    pagination: PropTypes.shape(paginationType),
+    grid: PropTypes.string.isRequired,
+    pageSizes: PropTypes.arrayOf(PropTypes.number),
+    paginationAfterGrid: PropTypes.bool,
+    paginationCountFormat: PropTypes.func
+};
+
+export default GridContainer;

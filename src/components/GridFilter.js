@@ -4,7 +4,7 @@
 
 import React from 'react'
 import {connect} from 'react-redux'
-import {applyFilter} from '../actions'
+import {applyFilter, initializeFilter} from '../actions'
 import {reduxForm} from 'redux-form'
 import Symbol from 'react-symbol'
 import Filter from './Filter'
@@ -45,21 +45,47 @@ const FilterForm = reduxForm({
     enableReinitialize: true
 })(GridFilter);
 
-const mapStateToProps = (state, props) => ({
-    form: props.grid + 'Filter',
-    initialValues: Object.assign({}, props.initialValues, state.grid[props.grid] && state.grid[props.grid].filter),
-    children: React.Children.map(props.children, child => {
-        if (React.isValidElement(child) && child.type === Filter && state.grid[props.grid] && state.grid[props.grid].filter[child.props.name]) {
-            return React.cloneElement(child, {className: child.props.className + ' filter_active'});
-        } else {
-            return child;
-        }
-    })
-});
+const mapStateToProps = (state, props) => {
+    // console.log(state.grid[props.grid] && state.grid[props.grid].filter);
+    // console.log(props.initialValues);
+
+    return ({
+        form: props.grid + 'Filter',
+        initialValues: Object.assign({}, props.initialValues, state.grid[props.grid] && state.grid[props.grid].filter),
+        children: React.Children.map(props.children, child => {
+            if (React.isValidElement(child) && child.type === Filter && state.grid[props.grid]
+                && state.grid[props.grid].filter.hasOwnProperty(child.props.name)) {
+                return React.cloneElement(child, {className: child.props.className + ' filter_active'});
+            } else {
+                return child;
+            }
+        })
+    });
+}
 
 const mapDispatchToProps = (dispatch, props) => ({
     onSubmit: (data) => dispatch(applyFilter(data, props.grid)),
-    clearFilter: () => dispatch(applyFilter(null, props.grid))
+    clearFilter: () => dispatch(applyFilter(props.initialValues, props.grid))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilterForm);
+const GridFilterContainer = connect(mapStateToProps, mapDispatchToProps)(FilterForm);
+
+class GridFilterWrapper extends React.Component {
+
+    componentDidMount() {
+        this.props.initializeFilter();
+    }
+
+    render() {
+        return (
+            <GridFilterContainer {...this.props}/>
+        );
+    }
+
+}
+
+const mapDispatchForWrapper = (dispatch, props) => ({
+    initializeFilter: () => dispatch(initializeFilter(props.grid, props.initialValues))
+});
+
+export default connect(null, mapDispatchForWrapper)(GridFilterWrapper);
