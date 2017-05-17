@@ -25,6 +25,9 @@ const createActions = (children, rowData, idx) => {
                 idx
             })
         }
+        return React.cloneElement(child, {
+            rowData
+        })
     });
 };
 
