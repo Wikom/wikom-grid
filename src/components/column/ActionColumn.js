@@ -28,11 +28,22 @@ const createActions = (children, rowData, idx) => {
     });
 };
 
-const ActionColumn = ({name, rowData, idx, children, ...rest}) => {
+const ActionColumn = ({name, rowData, idx, children, className, ...rest}) => {
     const actions = createActions(children, rowData, idx);
 
+    switch (typeof className){
+        case 'string':
+            className += ' table-actioncell';
+            break;
+
+        case 'object':
+            if (className.td) {
+                className = className.td + ' table-actioncell';
+            }
+            break;
+    }
     return (
-        <BaseColumn {...rest}>
+        <BaseColumn {...rest} className={className}>
             {actions}
         </BaseColumn>
     );

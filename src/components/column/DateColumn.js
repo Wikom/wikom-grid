@@ -9,10 +9,11 @@ import moment from 'moment'
 import BaseColumn from './BaseColumn'
 
 const DateColumn = ({name, rowData, idx, format, ...rest}) => {
+    const val = findInObject(idx, rowData);
 
     return (
         <BaseColumn {...rest}>
-            {moment.utc(findInObject(idx, rowData)).format(format || 'DD.MM.YYYY')}
+            {val ? moment.utc(val).format(format || 'DD.MM.YYYY') : null}
         </BaseColumn>
     );
 };
