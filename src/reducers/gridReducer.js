@@ -16,6 +16,8 @@ const initialGridState = () => ({
     sort: null
 });
 
+const defaultFilter = {};
+
 const gridReducer = (state = {}, action) => {
     switch (action.type) {
         case formActions.INITIALIZE: {
@@ -43,6 +45,13 @@ const gridReducer = (state = {}, action) => {
 
             return gridState;
         }
+        case types.INITIALIZE_FILTER: {
+            const gridState = Object.assign({}, state);
+
+            defaultFilter[action.name] = action.initialValues || {};
+
+            return gridState;
+        }
         case types.DESTROY: {
             const gridState = Object.assign({}, state);
 
@@ -60,6 +69,14 @@ const gridReducer = (state = {}, action) => {
             const params = queryString.parse(action.payload.search);
             const gridParams = params.grid ? JSON.parse(params.grid) : {};
 
+            for (let grid in gridState) {
+                if (!gridParams.hasOwnProperty(grid)) {
+                    console.log(defaultFilter);
+                    gridState[grid] = initialGridState();
+                    gridState[grid].filter = defaultFilter[grid] || {};
+                }
+            }
+
             for (let grid in gridParams) {
                 const gridConfig = gridParams[grid];
 
@@ -72,7 +89,7 @@ const gridReducer = (state = {}, action) => {
                 gridState[grid].pagination.pageSize = gridConfig.pageSize || null;
                 gridState[grid].pagination.currentPage = gridConfig.currentPage || 1;
                 gridState[grid].sort = gridConfig.sort || null;
-                gridState[grid].filter = gridConfig.filter || {};
+                gridState[grid].filter = gridConfig.filter || Object.assign({}, gridState[grid].filter);
             }
 
             return gridState;

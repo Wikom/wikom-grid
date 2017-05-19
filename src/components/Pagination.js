@@ -10,14 +10,29 @@ import paginationType from './propTypes/pagination'
 
 import {changePage, changePageSize} from '../actions'
 
-const renderPageSizeOptions = (pageSizes = [5, 10, 25, 50]) =>
-    pageSizes.map((value, i) => <option {...value} key={'psso_' + i}>{value}</option>);
+export const PAGINATION_COUNT_FORMAT_SHORT = ({totalCount}) => (totalCount + ' Zeile(n)');
+export const PAGINATION_COUNT_FORMAT_FULL = ({currentPage, pageCount, perPage, totalCount}) => {
+    const valueFrom = (currentPage - 1) * perPage + 1;
+    const valueTo = currentPage * perPage;
 
-const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePageChanged, handlePageSizeChanged}) =>
+    return (valueFrom + ' bis ' + (valueTo < totalCount ? valueTo : totalCount)  + ' von ' + totalCount + ' Einträgen');
+}
+
+const renderPageSizeOptions = (pageSizes, perPage) => {
+    if (pageSizes.indexOf(perPage) === -1) {
+        pageSizes.push(perPage);
+
+        pageSizes.sort((a, b) => a - b);
+    }
+
+    return pageSizes.map((value, i) => <option {...value} key={'psso_' + i}>{value}</option>);
+};
+
+const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePageChanged, handlePageSizeChanged, pageSizes, paginationCountFormat}) =>
     <div className="row grid-before-table">
         <div className="col-md-3">
             <div className="grid-filter grid-filter--entries">
-                {totalCount} Zeile(n)
+                {paginationCountFormat({currentPage, pageCount, perPage, totalCount})}
             </div>
         </div>
         <div className="col-md-6">
@@ -47,7 +62,7 @@ const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePa
                         className="input-sm form-control"
                         onChange={(evt) => handlePageSizeChanged(evt, grid)}
                     >
-                        {renderPageSizeOptions()}
+                        {renderPageSizeOptions(pageSizes, perPage)}
                     </select>
                 </div>
             </div>
@@ -55,11 +70,14 @@ const Pagination = ({grid, currentPage, pageCount, perPage, totalCount, handlePa
     </div>;
 
 Pagination.defaultProps = {
-    pageCount: 0
+    pageCount: 0,
+    paginationCountFormat: PAGINATION_COUNT_FORMAT_SHORT
 };
 
 Pagination.propTypes = Object.assign({
     grid: PropTypes.string.isRequired,
+    pageSizes: PropTypes.arrayOf(PropTypes.number).isRequired,
+    paginationCountFormat: PropTypes.func
 }, paginationType);
 
 const mapDispatchToProps = (dispatch) => ({

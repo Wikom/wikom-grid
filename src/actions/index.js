@@ -22,7 +22,15 @@ const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
         delete gridParams[name][param];
     }
 
-    queryParams.grid = JSON.stringify(gridParams);
+    if (Object.keys(gridParams[name]).length === 0) {
+        delete gridParams[name];
+    }
+
+    if (Object.keys(gridParams).length === 0) {
+        delete queryParams.grid;
+    } else {
+        queryParams.grid = JSON.stringify(gridParams);
+    }
 
     return dispatch(push({pathname: url, search: queryString.stringify(queryParams)}))
 };
@@ -56,4 +64,15 @@ export const changeSelection = (name, target) => ({
     name,
     checked: target.checked,
     value: target.value
+});
+
+export const initializeFilter = (name, initialValues) => ({
+    type: types.INITIALIZE_FILTER,
+    name,
+    initialValues
+});
+
+export const destroyFilter = (name) => ({
+    type: types.DESTROY_FILTER,
+    name
 });

@@ -13,6 +13,20 @@ import GridFilter from './components/GridFilter'
 import Filter from './components/Filter'
 import gridReducer from './reducers/gridReducer'
 import * as gridActions from './actions'
+import * as paginationTypes from './components/Pagination'
 
 export default Grid
-export {Grid, ConnectedGrid, Columns, Column, ColTypes, GridAction, GridLink, GridFilter, Filter, gridReducer, gridActions}
+export {
+    Grid,
+    ConnectedGrid,
+    Columns,
+    Column,
+    ColTypes,
+    GridAction,
+    GridLink,
+    GridFilter,
+    Filter,
+    gridReducer,
+    gridActions,
+    paginationTypes
+}
