@@ -54,7 +54,7 @@ const mapStateToProps = (state, props) => {
         initialValues: Object.assign({}, props.initialValues, state.grid[props.grid] && state.grid[props.grid].filter),
         children: React.Children.map(props.children, child => {
             if (React.isValidElement(child) && child.type === Filter && state.grid[props.grid]
-                && state.grid[props.grid].filter.hasOwnProperty(child.props.name) && state.grid[props.grid].filter[child.props.name] !== null) {
+                && state.grid[props.grid].filter.hasOwnProperty(child.props.name) && state.grid[props.grid].filter[child.props.name] !== null && state.grid[props.grid].filter[child.props.name] !== "") {
                 return React.cloneElement(child, {className: child.props.className + ' filter_active'});
             } else {
                 return child;
