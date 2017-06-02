@@ -19,7 +19,7 @@ const BoolColumn = ({name, rowData, idx, ...rest}) => {
     );
 };
 
-SymbolColumn.propTypes = {
+BoolColumn.propTypes = {
     name: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.object]).isRequired,
@@ -27,8 +27,7 @@ SymbolColumn.propTypes = {
     idx: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string
-    ]),
-    symbols: PropTypes.object.isRequired
+    ])
 };
 
 export default BoolColumn;
