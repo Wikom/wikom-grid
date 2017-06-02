@@ -13,8 +13,8 @@ const BoolColumn = ({name, rowData, idx, ...rest}) => {
     return (
         <BaseColumn {...rest}>
             {findInObject(idx, rowData) ?
-                <Symbol symbol="check" className="text-success" /> :
-                <Symbol symbol="times" className="text-danger" />}
+                <Symbol symbol={{symbol: "check", className:"text-success"}} /> :
+                <Symbol symbol={{symbol: "times", className:"text-danger"}} />}
         </BaseColumn>
     );
 };
