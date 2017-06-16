@@ -2,7 +2,7 @@
  * Created by rouven on 17.03.17.
  */
 
-import {push} from 'react-router-redux'
+import {replace} from 'react-router-redux'
 import queryString from 'query-string'
 import * as types from './actionTypes'
 
@@ -32,7 +32,7 @@ const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
         queryParams.grid = JSON.stringify(gridParams);
     }
 
-    return dispatch(push({pathname: url, search: queryString.stringify(queryParams)}))
+    return dispatch(replace({pathname: url, search: queryString.stringify(queryParams)}))
 };
 
 export const applyFilter = (data, name) => changeGridParam({name, param: 'filter', value: data});
