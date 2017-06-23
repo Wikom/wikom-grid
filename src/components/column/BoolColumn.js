@@ -9,12 +9,15 @@ import Symbol from 'react-symbol'
 import BaseColumn from './BaseColumn'
 
 const BoolColumn = ({name, rowData, idx, ...rest}) => {
+    const isTrue = [true, 'true', 1, '1', 'j', 'J'].indexOf(findInObject(idx, rowData)) > -1;
 
     return (
         <BaseColumn {...rest}>
-            {findInObject(idx, rowData) ?
-                <Symbol symbol={{symbol: "check", className:"text-success"}} /> :
-                <Symbol symbol={{symbol: "times", className:"text-danger"}} />}
+            {
+                isTrue === true
+                    ? <Symbol symbol={{symbol: "check", className: "text-success"}}/>
+                    : <Symbol symbol={{symbol: "times", className: "text-danger"}}/>
+            }
         </BaseColumn>
     );
 };
