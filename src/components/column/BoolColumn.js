@@ -8,13 +8,30 @@ import findInObject from 'find-in-object'
 import Symbol from 'react-symbol'
 import BaseColumn from './BaseColumn'
 
-const BoolColumn = ({name, rowData, idx, withNull, ...rest}) => {
+const BoolColumn = ({name, rowData, idx, withNull, type, ...rest}) => {
     const value = findInObject(idx, rowData);
     const isTrue = [true, 'true', 1, '1', 'j', 'J'].indexOf(value) !== -1;
     const isFalse = withNull === false
         ? isTrue === false
         : [false, 'false', 0, '0', 'n', 'N'].indexOf(value) !== -1;
 
+    if (type == 'string') {
+        return (
+            <BaseColumn {...rest}>
+                {
+                    isTrue === true
+                        ? <span>ja</span>
+                        : (
+                            isFalse === true
+                                ? <span>nein</span>
+                                : null
+                        )
+                }
+            </BaseColumn>
+        );
+    }
+
+    // else: type == symbol
     return (
         <BaseColumn {...rest}>
             {
@@ -31,7 +48,8 @@ const BoolColumn = ({name, rowData, idx, withNull, ...rest}) => {
 };
 
 BoolColumn.defaultProps = {
-    withNull: false
+    withNull: false,
+    type: 'symbol'
 };
 
 BoolColumn.propTypes = {
@@ -43,7 +61,8 @@ BoolColumn.propTypes = {
         PropTypes.number,
         PropTypes.string
     ]),
-    withNull: PropTypes.bool
+    withNull: PropTypes.bool,
+    type: PropTypes.string
 };
 
 export default BoolColumn;
