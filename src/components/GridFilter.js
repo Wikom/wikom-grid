@@ -33,13 +33,13 @@ const GridFilterDefaultTemplate = ({clearFilter, children}) =>
         </div>
     </div>;
 
-const GridFilter = ({handleSubmit, onSubmit, clearFilter, children, Template}) => {
+const GridFilter = ({handleSubmit, onSubmit, children, Template, ...rest}) => {
     if (!(children instanceof Array) || !children.length) {
         return null;
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Template clearFilter={clearFilter}>
+            <Template {...rest}>
                 {children}
             </Template>
         </form>);
