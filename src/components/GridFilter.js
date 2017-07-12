@@ -33,19 +33,19 @@ const GridFilterDefaultTemplate = ({clearFilter, children}) =>
         </div>
     </div>;
 
-const GridFilter = ({handleSubmit, onSubmit, clearFilter, children, template}) => {
+const GridFilter = ({handleSubmit, onSubmit, clearFilter, children, Template}) => {
     if (!(children instanceof Array) || !children.length) {
         return null;
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <template clearFilter={clearFilter}>
+            <Template clearFilter={clearFilter}>
                 {children}
-            </template>
+            </Template>
         </form>);
 };
 GridFilter.defaultProps = {
-    template: GridFilterDefaultTemplate
+    Template: GridFilterDefaultTemplate
 };
 
 const FilterForm = reduxForm({
