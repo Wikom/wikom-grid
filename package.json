@@ -1,6 +1,6 @@
 {
   "name": "wikom-grid",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "main": "lib/index.js",
   "module": "src/index.js",
   "repository": "git@github.com:Wikom/wikom-grid.git",
@@ -19,7 +19,7 @@
     "react-loading": "https://github.com/Wikom/react-loading.git",
     "react-pager": "^1.2.1",
     "react-symbol": "https://github.com/Wikom/react-symbol.git",
-    "redux-form": "^6.5.0",
+    "redux-form": "^7.0.3",
     "wikom-data": "https://github.com/Wikom/wikom-data.git",
     "with-tooltip": "https://github.com/Wikom/with-tooltip.git"
   },
