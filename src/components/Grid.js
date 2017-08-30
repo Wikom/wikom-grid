@@ -39,7 +39,8 @@ class Grid extends React.Component {
             this._columns = this.createColumns(nextProps.children);
         }
 
-        if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
+        if (JSON.stringify(this.props.isLoading) !== JSON.stringify(nextProps.isLoading)
+            || JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
             this.props.changeData(nextProps.grid, nextProps.data);
         // if (this.props.isLoading !== nextProps.isLoading) {
             // console.log('---isLoading changed---');
