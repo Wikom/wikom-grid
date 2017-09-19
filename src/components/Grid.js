@@ -19,6 +19,7 @@ class Grid extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log('grid props', props);
         // console.log('---grid constructor---');
         this._columns = this.createColumns(props.children);
         this._rows = this.buildRows(props);
@@ -68,12 +69,16 @@ class Grid extends React.Component {
         return columns;
     }
 
-    buildRows({grid, isLoading, data}) {
+    buildRows({grid, isLoading, data, ...rest}) {
+        console.log('buildRows', grid, data, rest);
         return isLoading
             ? <FullRow colSpan={this._columns.length}><Loading/></FullRow>
             : (
                 data && data.length > 0
-                    ? data.map((rowData, i) => <Row rowData={rowData} key={i} grid={grid}>{this._columns}</Row>)
+                    ? data.map((rowData, i) =>
+                    {
+                        return (<Row rowData={rowData} key={i} grid={grid}>{this._columns}</Row>);
+                    })
                     : <FullRow colSpan={this._columns.length}>Keine Ergebnisse vorhanden</FullRow>
             );
     }

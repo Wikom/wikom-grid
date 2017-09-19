@@ -13,7 +13,12 @@ const initialGridState = () => ({
     filter: {},
     pagination: {},
     selection: [],
-    sort: null
+    sort: null,
+    edit: {
+        grid: null,
+        row: null,
+        cell: null
+    }
 });
 
 const defaultFilter = {};
