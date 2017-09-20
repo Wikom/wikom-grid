@@ -48,6 +48,12 @@ export const initializeGrid = (name) => ({
     name
 });
 
+export const setEditRow = (name, index) => ({
+    type: types.SETEDITROW,
+    name,
+    index
+});
+
 export const destroyGrid = (name) => ({
     type: types.DESTROY,
     name

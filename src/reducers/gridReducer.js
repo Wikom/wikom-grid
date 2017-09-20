@@ -15,7 +15,6 @@ const initialGridState = () => ({
     selection: [],
     sort: null,
     edit: {
-        grid: null,
         row: null,
         cell: null
     }
@@ -47,6 +46,17 @@ const gridReducer = (state = {}, action) => {
             if (!gridState[action.name]) {
                 gridState[action.name] = initialGridState();
             }
+
+            return gridState;
+        }
+        case types.SETEDITROW: {
+            const gridState = Object.assign({}, state);
+
+            if (!gridState[action.name]) {
+                gridState[action.name] = initialGridState();
+            }
+
+            gridState[action.name].edit.row = action.index || null;
 
             return gridState;
         }

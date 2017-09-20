@@ -1,11 +1,11 @@
 /**
- * Created by rouven on 09.03.17.
+ * Created by marvin.ruppelt on 20.09.17.
  */
 
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const BaseColumn = ({className, onClick,  children}) => {
+const BaseColumn = ({className, children}) => {
     const tdProps = {};
 
     switch (typeof className) {
@@ -20,7 +20,7 @@ const BaseColumn = ({className, onClick,  children}) => {
     }
 
     return (
-        <td {...tdProps} onClick={onClick}>
+        <td {...tdProps}>
             {children}
         </td>
     );

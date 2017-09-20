@@ -7,16 +7,16 @@ import PropTypes from 'prop-types'
 import findInObject from 'find-in-object'
 import BaseColumn from './BaseColumn'
 
-const EditColumn = ({name, rowData, idx, children, ...rest}) =>
-    <BaseColumn {...rest}>
-        edit:
-        {children}
-    </BaseColumn>;
+const EditColumn = ({rowData, idx, children, ...rest}) => {
+    console.log('editcolumn', rowData, idx, children, rest);
+    return (
+        <BaseColumn {...rest}>
+            edit:
+            {children}
+        </BaseColumn>);
+};
 
 EditColumn.propTypes = {
-    name: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object]).isRequired,
     rowData: PropTypes.object,
     idx: PropTypes.oneOfType([
         PropTypes.number,
