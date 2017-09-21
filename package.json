@@ -14,12 +14,22 @@
   "dependencies": {
     "find-in-object": "https://github.com/Wikom/find-in-object.git",
     "moment": "^2.18.1",
+    "node": "^8.3.0",
+    "prop-types": "^15.5.7",
     "query-string": "^4.3.2",
+    "react": "^15.5.4",
     "react-conditional": "https://github.com/Wikom/react-conditional.git",
+    "react-dom": "^15.5.4",
     "react-loading": "https://github.com/Wikom/react-loading.git",
     "react-pager": "^1.2.1",
+    "react-redux": "^5.0.2",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "react-router-redux": "^5.0.0-alpha.4",
     "react-symbol": "https://github.com/Wikom/react-symbol.git",
+    "redux": "^3.6.0",
     "redux-form": "^7.0.3",
+    "redux-mock-store": "^1.3.0",
     "wikom-data": "https://github.com/Wikom/wikom-data.git",
     "with-tooltip": "https://github.com/Wikom/with-tooltip.git"
   },
@@ -31,6 +41,19 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "css-loader": "^0.26.1",
+    "enzyme": "^2.9.1",
+    "jest": "^21.1.0",
+    "jest-cli": "^20.0.3",
+    "jsdoc": "^3.5.3",
+    "jsdoc-to-markdown": "^3.0.0",
+    "nock": "^9.0.17",
+    "prop-types": "^15.5.7",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.2",
+    "react-router-redux": "^5.0.0-alpha.4",
+    "react-test-renderer": "^15.6.1",
+    "redux": "^3.6.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0"
   },
@@ -47,7 +70,9 @@
   "scripts": {
     "start": "npm run babel && npm run webpack",
     "webpack": "webpack --config=production.config.js",
-    "babel": "babel src --out-dir lib"
+    "babel": "babel src --out-dir lib",
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "babel": {
     "presets": [

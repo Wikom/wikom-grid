@@ -5,6 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import GridTable from '../components/GridTable'
 import Columns from './Columns'
 import Row from './Row'
 import Header from './Header'

@@ -1,5 +1,5 @@
 /**
- * Created by rouven on 23.02.17.
+ * Created by marvin.ruppelt on 21.09.17.
  */
 
 import React from 'react'
@@ -14,7 +14,7 @@ import Pagination, {PAGINATION_COUNT_FORMAT_SHORT} from './Pagination'
 import {initializeGrid, destroyGrid, changeData} from '../actions'
 import paginationType from './propTypes/pagination'
 
-class Grid extends React.Component {
+class GridTable extends React.Component {
     constructor(props) {
         super(props);
 
@@ -123,21 +123,7 @@ class Grid extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    initializeGrid: grid => dispatch(initializeGrid(grid)),
-    destroyGrid: grid => dispatch(destroyGrid(grid)),
-    changeData: (grid, data) => dispatch(changeData(grid, data))
-});
-
-const GridContainer = connect(null, mapDispatchToProps)(Grid);
-
-GridContainer.defaultProps = {
-    pageSizes: [10, 20, 50],
-    paginationAfterGrid: false,
-    paginationCountFormat: PAGINATION_COUNT_FORMAT_SHORT
-};
-
-GridContainer.propTypes = {
+GridTable.propTypes = {
     children: PropTypes.node,
     data: PropTypes.arrayOf(PropTypes.object),
     isLoading: PropTypes.bool.isRequired,
@@ -148,4 +134,4 @@ GridContainer.propTypes = {
     paginationCountFormat: PropTypes.func
 };
 
-export default GridContainer;
+export default GridTable;
