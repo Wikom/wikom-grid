@@ -14,7 +14,6 @@
   "dependencies": {
     "find-in-object": "https://github.com/Wikom/find-in-object.git",
     "moment": "^2.18.1",
-    "node": "^8.3.0",
     "prop-types": "^15.5.7",
     "query-string": "^4.3.2",
     "react": "^15.5.4",
@@ -43,7 +42,7 @@
     "css-loader": "^0.26.1",
     "enzyme": "^2.9.1",
     "jest": "^21.1.0",
-    "jest-cli": "^20.0.3",
+    "jest-cli": "^21.1.0",
     "jsdoc": "^3.5.3",
     "jsdoc-to-markdown": "^3.0.0",
     "nock": "^9.0.17",
