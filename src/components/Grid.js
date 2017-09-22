@@ -18,7 +18,6 @@ class Grid extends React.Component {
     constructor(props) {
         super(props);
 
-        // console.log('---grid constructor---');
         this._columns = this.createColumns(props.children);
         this._rows = this.buildRows(props);
     }
