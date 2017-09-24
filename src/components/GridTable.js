@@ -1,26 +1,25 @@
 /**
- * Created by rouven on 23.02.17.
+ * Created by marvin.ruppelt on 21.09.17.
  */
 
 import React from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 import Columns from './Columns'
-import EditColumns from './EditColumns'
 import Row from './Row'
 import Header from './Header'
 import FullRow from './FullRow'
 import Loading from 'react-loading'
 import Pagination, {PAGINATION_COUNT_FORMAT_SHORT} from './Pagination'
-import {initializeGrid, destroyGrid, changeData, setEditRow} from '../actions'
+import {initializeGrid, destroyGrid, changeData} from '../actions'
 import paginationType from './propTypes/pagination'
 
-class Grid extends React.Component {
+class GridTable extends React.Component {
     constructor(props) {
         super(props);
-        this._rowInEdit = null;
 
-        this.createColumns(props.children);
+        // console.log('---grid constructor---');
+        this._columns = this.createColumns(props.children);
         this._rows = this.buildRows(props);
     }
 
@@ -33,20 +32,13 @@ class Grid extends React.Component {
         if (this.props.grid !== nextProps.grid) {
             this.props.destroyGrid(this.props.grid);
             this.props.initializeGrid(nextProps.grid);
-
-            this.createColumns(nextProps.children);
+            this._columns = this.createColumns(nextProps.children);
         }
 
         if (JSON.stringify(this.props.isLoading) !== JSON.stringify(nextProps.isLoading)
             || JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
             this.props.changeData(nextProps.grid, nextProps.data);
 
-            this._rows = this.buildRows(nextProps);
-        }
-
-        if (nextProps.edit.row !== this._rowInEdit) {
-            this._rowInEdit = nextProps.edit.row;
-            this.props.changeData(nextProps.grid, nextProps.edit);
             this._rows = this.buildRows(nextProps);
         }
     }
@@ -57,57 +49,26 @@ class Grid extends React.Component {
 
     createColumns(children) {
         let columns = [];
-        let editColumnsTemp = {};
-        let editColumns = [];
 
         React.Children.forEach(children, (child) => {
-            if (React.isValidElement(child)){
-                if(child.type === Columns) {
-                    React.Children.forEach(child.props.children, (col) => {
-                        if (React.isValidElement(col)) {
-                            columns.push(col);
-                        }
-                    });
-                }
-
-                if(child.type === EditColumns) {
-                    React.Children.forEach(child.props.children, (col) => {
-                        if (React.isValidElement(col)) {
-                            if(col.props.idx){
-                                editColumnsTemp[col.props.idx] = col;
-                            }
-                        }
-                    });
-                }
+            if (React.isValidElement(child) && child.type === Columns) {
+                React.Children.forEach(child.props.children, (col) => {
+                    if (React.isValidElement(col)) {
+                        columns.push(col);
+                    }
+                });
             }
         });
 
-        for(let i in columns){
-            let idx = columns[i].props.idx || false;
-            editColumns[i] = (idx && editColumnsTemp.hasOwnProperty(idx)) ?
-                editColumnsTemp[idx] : columns[i];
-        }
-
-        this._columns = columns;
-        this._editColumns = editColumns;
+        return columns;
     }
 
-    buildRows({grid, isLoading, data, ...rest}) {
-        console.log('buildRows', grid, this._rowInEdit, 'working??');
-
+    buildRows({grid, isLoading, data}) {
         return isLoading
             ? <FullRow colSpan={this._columns.length}><Loading/></FullRow>
             : (
                 data && data.length > 0
-                    ? data.map((rowData, i) =>
-                    {
-                        if(this._rowInEdit === i){console.log(i + ' row in edit!');
-                            return (<Row rowData={rowData} key={i} rowId={i} grid={grid} editable={this.props.editRoute || false}>{this._editColumns}</Row>);
-
-                        } else {
-                            return (<Row rowData={rowData} key={i} rowId={i} grid={grid} editable={this.props.editRoute || false}>{this._columns}</Row>);
-                        }
-                    })
+                    ? data.map((rowData, i) => <Row rowData={rowData} key={i} grid={grid}>{this._columns}</Row>)
                     : <FullRow colSpan={this._columns.length}>Keine Ergebnisse vorhanden</FullRow>
             );
     }
@@ -162,26 +123,7 @@ class Grid extends React.Component {
     }
 }
 
-const mapStateToProps = (state, {grid}) => ({
-    edit: state.grid[grid].edit
-});
-
-const mapDispatchToProps = dispatch => ({
-    setEditRow: (grid, idx) => dispatch(setEditRow(grid, idx)),
-    initializeGrid: grid => dispatch(initializeGrid(grid)),
-    destroyGrid: grid => dispatch(destroyGrid(grid)),
-    changeData: (grid, data) => dispatch(changeData(grid, data))
-});
-
-const GridContainer = connect(mapStateToProps, mapDispatchToProps)(Grid);
-
-GridContainer.defaultProps = {
-    pageSizes: [10, 20, 50],
-    paginationAfterGrid: false,
-    paginationCountFormat: PAGINATION_COUNT_FORMAT_SHORT
-};
-
-GridContainer.propTypes = {
+GridTable.propTypes = {
     children: PropTypes.node,
     data: PropTypes.arrayOf(PropTypes.object),
     isLoading: PropTypes.bool.isRequired,
@@ -192,4 +134,4 @@ GridContainer.propTypes = {
     paginationCountFormat: PropTypes.func
 };
 
-export default GridContainer;
+export default GridTable;
