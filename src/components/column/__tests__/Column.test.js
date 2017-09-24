@@ -16,7 +16,9 @@ describe('components', () => {
                 foo: 'bar'
             };
 
-            const col = mount(<Column name="" rowData={rowData} idx="foo" />);
+            const col = mount(<table><tbody><tr>
+                <Column name="" rowData={rowData} idx="foo" />
+            </tr></tbody></table>);
 
             expect(col.text()).toBe('bar');
         });

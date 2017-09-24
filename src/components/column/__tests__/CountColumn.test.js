@@ -15,7 +15,9 @@ describe('components', () => {
                 foo: [1,2,3,4,5,6]
             };
 
-            const falseCol = mount(<CountColumn name="" rowData={rowData} idx="foo" type="string" />);
+            const falseCol = mount(<table><tbody><tr>
+                <CountColumn name="" rowData={rowData} idx="foo" type="string" />
+            </tr></tbody></table>);
             expect(falseCol.find('td').text()).toBe('6');
 
         });
@@ -26,7 +28,9 @@ describe('components', () => {
                 id: 1
             };
 
-            const falseCol = mount(<CountColumn name="" rowData={rowData} idx="foo" type="string" />);
+            const falseCol = mount(<table><tbody><tr>
+                <CountColumn name="" rowData={rowData} idx="foo" type="string" />
+            </tr></tbody></table>);
             expect(falseCol.find('td').text()).toBe('0');
 
         });
