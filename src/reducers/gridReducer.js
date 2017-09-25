@@ -56,7 +56,7 @@ const gridReducer = (state = {}, action) => {
                 gridState[action.name] = initialGridState();
             }
 
-            gridState[action.name].edit.row = action.index || null;
+            gridState[action.name].edit.row = action.index;
 
             return gridState;
         }

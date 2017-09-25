@@ -5,6 +5,7 @@
 import {replace} from 'react-router-redux'
 import queryString from 'query-string'
 import * as types from './actionTypes'
+import {submit} from 'redux-form'
 
 const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
     const location = getState().routing.location;
@@ -82,3 +83,11 @@ export const destroyFilter = (name) => ({
     type: types.DESTROY_FILTER,
     name
 });
+
+export const submitField = ({rowData, idx, url, value, ...rest}) => {
+    console.log('submitField', rowData, value, idx, url, rest);
+    let data = rowData;
+    data[idx] = value;
+
+    return submit({url, data});
+};

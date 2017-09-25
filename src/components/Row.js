@@ -7,13 +7,14 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {setEditRow} from "../actions";
 
-const Row = ({rowId, children, grid, editable, rowData, setEditRow}) =>
+const Row = ({rowId, children, grid, editable, rowData, setEditRow, ...props}) =>
     <tr>
         {
             React.Children.map(children, (child) => React.cloneElement(child, {
                 grid,
                 rowData,
-                onClick: editable ? () => setEditRow(grid, rowId) : null
+                onClick: editable ? () => setEditRow(grid, rowId) : null,
+                ...props
             }))
         }
     </tr>;

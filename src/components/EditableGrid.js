@@ -1,6 +1,12 @@
 import React from 'react'
 import Grid from './Grid'
-import { setEditRow } from '../actions'
+import Columns from './Columns'
+import EditColumns from './EditColumns'
+import Row from './Row'
+import FullRow from './FullRow'
+import Loading from 'react-loading'
+import {reduxForm} from 'redux-form'
+import {submit} from 'wikom-data'
 
 class EditableGrid extends Grid {
     constructor(props) {
@@ -71,8 +77,6 @@ class EditableGrid extends Grid {
     }
 
     buildRows({grid, isLoading, data, ...rest}) {
-        console.log('buildRows', grid, this._rowInEdit, 'working??');
-
         return isLoading
             ? <FullRow colSpan={this._columns.length}><Loading/></FullRow>
             : (
@@ -80,9 +84,18 @@ class EditableGrid extends Grid {
                     ? data.map((rowData, i) =>
                     {
                         if(this._rowInEdit === i){
-                            return (<Row rowData={rowData} key={i} rowId={i} grid={grid} editable={this.props.editRoute || false}>{this._editColumns}</Row>);
+                            const EditRow = reduxForm({
+                                form: grid + '_form',
+                                initialValues: rowData,
+                                submitHandler: data => submit({url: this.props.editRoute, data})
+                            })(Row);
+console.log(this.props.editRoute);
+                            return (<EditRow rowData={rowData} key={i} rowId={i} grid={grid} url={this.props.editRoute}>
+                                {this._editColumns}
+                                </EditRow>);
                         } else {
-                            return (<Row rowData={rowData} key={i} rowId={i} grid={grid} editable={this.props.editRoute || false}>{this._columns}</Row>);
+                            return (<Row rowData={rowData} key={i} rowId={i} grid={grid}
+                                         editable={this.props.hasOwnProperty('editRoute') || false}>{this._columns}</Row>);
                         }
                     })
                     : <FullRow colSpan={this._columns.length}>Keine Ergebnisse vorhanden</FullRow>
@@ -90,31 +103,4 @@ class EditableGrid extends Grid {
     }
 }
 
-const mapStateToProps = (state, {grid}) => ({
-    edit: state.grid[grid].edit
-});
-
-const mapDispatchToProps = dispatch => ({
-    setEditRow: (grid, idx) => dispatch(setEditRow(grid, idx))
-});
-
-const GridContainer = connect(mapStateToProps, mapDispatchToProps)(EditableGrid);
-
-GridContainer.defaultProps = {
-    pageSizes: [10, 20, 50],
-    paginationAfterGrid: false,
-    paginationCountFormat: PAGINATION_COUNT_FORMAT_SHORT
-};
-
-GridContainer.propTypes = {
-    children: PropTypes.node,
-    data: PropTypes.arrayOf(PropTypes.object),
-    isLoading: PropTypes.bool.isRequired,
-    pagination: PropTypes.shape(paginationType),
-    grid: PropTypes.string.isRequired,
-    pageSizes: PropTypes.arrayOf(PropTypes.number),
-    paginationAfterGrid: PropTypes.bool,
-    paginationCountFormat: PropTypes.func
-};
-
-export default GridContainer;
+export default EditableGrid;
