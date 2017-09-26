@@ -5,7 +5,7 @@
 import {replace} from 'react-router-redux'
 import queryString from 'query-string'
 import * as types from './actionTypes'
-import {submit} from 'redux-form'
+import {submit} from 'wikom-data'
 
 const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
     const location = getState().routing.location;

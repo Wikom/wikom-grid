@@ -3,6 +3,7 @@
  */
 
 import React from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import findInObject from 'find-in-object'
 import BaseColumn from './BaseColumn'
@@ -10,7 +11,7 @@ import {submitField} from '../../actions'
 
 import {Field} from 'redux-form'
 
-const TextEditColumn = ({rowData, idx, url, ...rest}) => {
+const TextEditColumn = ({rowData, idx, url, fieldSubmit, ...rest}) => {
     console.log('TextEditColumn', rest);
 
     return (<BaseColumn {...rest}>
@@ -19,7 +20,7 @@ const TextEditColumn = ({rowData, idx, url, ...rest}) => {
             component="input"
             className="form-control"
             onBlur={(input, value) => {
-                submitField({rowData, idx, url, value});
+                fieldSubmit(rowData, idx, url, value);
             }}
         />
     </BaseColumn>);
@@ -32,5 +33,9 @@ TextEditColumn.propTypes = {
         PropTypes.string
     ])
 };
+const mapDispatch = dispatch => ({
+    fieldSubmit: (rowData, idx, url, value) =>
+        dispatch(submitField({rowData, idx, url, value}))
+});
 
-export default TextEditColumn;
+export default connect(null, mapDispatch)(TextEditColumn);

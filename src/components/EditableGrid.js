@@ -45,8 +45,8 @@ class EditableGrid extends Grid {
         let editColumns = [];
 
         React.Children.forEach(children, (child) => {
-            if (React.isValidElement(child)){
-                if(child.type === Columns) {
+            if (React.isValidElement(child)) {
+                if (child.type === Columns) {
                     React.Children.forEach(child.props.children, (col) => {
                         if (React.isValidElement(col)) {
                             columns.push(col);
@@ -54,10 +54,10 @@ class EditableGrid extends Grid {
                     });
                 }
 
-                if(child.type === EditColumns) {
+                if (child.type === EditColumns) {
                     React.Children.forEach(child.props.children, (col) => {
                         if (React.isValidElement(col)) {
-                            if(col.props.idx){
+                            if (col.props.idx) {
                                 editColumnsTemp[col.props.idx] = col;
                             }
                         }
@@ -66,7 +66,7 @@ class EditableGrid extends Grid {
             }
         });
 
-        for(let i in columns){
+        for (let i in columns) {
             let idx = columns[i].props.idx || false;
             editColumns[i] = (idx && editColumnsTemp.hasOwnProperty(idx)) ?
                 editColumnsTemp[idx] : columns[i];
@@ -81,18 +81,20 @@ class EditableGrid extends Grid {
             ? <FullRow colSpan={this._columns.length}><Loading/></FullRow>
             : (
                 data && data.length > 0
-                    ? data.map((rowData, i) =>
-                    {
-                        if(this._rowInEdit === i){
+                    ? data.map((rowData, i) => {
+                        if (this._rowInEdit === i) {
                             const EditRow = reduxForm({
                                 form: grid + '_form',
                                 initialValues: rowData,
                                 submitHandler: data => submit({url: this.props.editRoute, data})
                             })(Row);
-console.log(this.props.editRoute);
+
+                            console.log(this.props.editRoute);
+
                             return (<EditRow rowData={rowData} key={i} rowId={i} grid={grid} url={this.props.editRoute}>
                                 {this._editColumns}
-                                </EditRow>);
+                            </EditRow>);
+
                         } else {
                             return (<Row rowData={rowData} key={i} rowId={i} grid={grid}
                                          editable={this.props.hasOwnProperty('editRoute') || false}>{this._columns}</Row>);
