@@ -5,7 +5,7 @@
 import React from 'react'
 import * as types from '../../actions/actionTypes'
 import {mount} from 'enzyme'
-import {Grid, Columns, Column} from '../../index'
+import {GridContainer as Grid, Columns, Column} from '../../index'
 import configureStore from 'redux-mock-store'
 
 function setupStore(storeData) {

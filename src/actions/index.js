@@ -6,6 +6,7 @@ import {replace} from 'react-router-redux'
 import queryString from 'query-string'
 import * as types from './actionTypes'
 import {submit} from 'wikom-data'
+import findInObject from 'find-in-object'
 
 const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
     const location = getState().routing.location;
@@ -49,10 +50,33 @@ export const initializeGrid = (name) => ({
     name
 });
 
-export const setEditRow = (name, index) => ({
-    type: types.SETEDITROW,
+export const setNextEditRow = (name, index) => ({
+    type: types.SETNEXTEDITROW,
     name,
     index
+});
+
+export const fieldChanged = (name,idx) => ({
+    type: types.FIELDCHANGED,
+    name,
+    idx
+});
+
+export const fieldSaved = (name,idx) => ({
+    type: types.FIELDSAVED,
+    name,
+    idx
+});
+
+export const fieldInSubmission = (name, idx) => ({
+    type: types.FIELDINSUBMISSION,
+    name,
+    idx
+});
+export const fieldSubmissionFailed = (name, idx) => ({
+    type: types.FIELDSUBMISSIONFAILED,
+    name,
+    idx
 });
 
 export const destroyGrid = (name) => ({
@@ -85,9 +109,17 @@ export const destroyFilter = (name) => ({
 });
 
 export const submitField = ({rowData, idx, url, value, ...rest}) => {
-    console.log('submitField', rowData, value, idx, url, rest);
     let data = rowData;
-    data[idx] = value;
 
+    data[idx] = value;
     return submit({url, data});
+
+    //ToDo: Nur bei Änderung...
+    if(findInObject(idx, data) != value){
+        data[idx] = value;
+
+        return submit({url, data});
+    } else {
+        return new Promise((resolve) => {resolve(null)});
+    }
 };

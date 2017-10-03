@@ -7,11 +7,35 @@ import FullRow from './FullRow'
 import Loading from 'react-loading'
 import {reduxForm} from 'redux-form'
 import {submit} from 'wikom-data'
+import findInObject from 'find-in-object'
+import * as fieldStatus from "../constants/fieldStatus";
+
+/**
+ * checks if rerender of grid is necessary, based on rowStatus
+ *
+ * @param oldStatus
+ * @param newStatus
+ * @return {boolean}
+ */
+const shouldRerenderByStatus = (oldStatus, newStatus) => {
+    for(let idx in newStatus){
+        const oldFieldStatus = findInObject(idx, oldStatus);
+        const newFieldStatus = findInObject(idx, newStatus);
+        if(oldFieldStatus != newFieldStatus){
+            if([null, fieldStatus.STATUS_CHANGED].indexOf(oldFieldStatus) === -1 ||
+                [null, fieldStatus.STATUS_CHANGED].indexOf(newFieldStatus) === -1){
+                return true;
+            }
+        }
+    }
+    return false;
+};
 
 class EditableGrid extends Grid {
     constructor(props) {
         super(props);
         this._rowInEdit = null;
+        this._rowStatus = null;
 
         this.createColumns(props.children);
         this._rows = this.buildRows(props);
@@ -25,16 +49,18 @@ class EditableGrid extends Grid {
             this.createColumns(nextProps.children);
         }
 
+        // Data changed?
         if (JSON.stringify(this.props.isLoading) !== JSON.stringify(nextProps.isLoading)
             || JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
             this.props.changeData(nextProps.grid, nextProps.data);
-
             this._rows = this.buildRows(nextProps);
         }
 
-        if (nextProps.edit.row !== this._rowInEdit) {
-            this._rowInEdit = nextProps.edit.row;
-            this.props.changeData(nextProps.grid, nextProps.edit);
+        // different row in edit, different cell status?
+        if (nextProps.edit.current.row !== this._rowInEdit ||
+            shouldRerenderByStatus(this._rowStatus, nextProps.edit.status)) {
+            this._rowInEdit = nextProps.edit.current.row;
+            this._rowStatus = Object.assign({}, nextProps.edit.status); // clone object
             this._rows = this.buildRows(nextProps);
         }
     }
@@ -89,9 +115,8 @@ class EditableGrid extends Grid {
                                 submitHandler: data => submit({url: this.props.editRoute, data})
                             })(Row);
 
-                            console.log(this.props.editRoute);
-
-                            return (<EditRow rowData={rowData} key={i} rowId={i} grid={grid} url={this.props.editRoute}>
+                            return (<EditRow rowData={rowData} key={i} rowId={i} grid={grid} url={this.props.editRoute}
+                                             status={this._rowStatus}>
                                 {this._editColumns}
                             </EditRow>);
 

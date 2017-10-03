@@ -3,7 +3,6 @@
  */
 
 import Column from './Column'
-import EditColumn from './EditColumn'
 import BaseColumn from './BaseColumn'
 import ActionColumn from './ActionColumn'
 import DateColumn from './DateColumn'
@@ -15,4 +14,4 @@ import CountColumn from './CountColumn'
 import BoolColumn from './BoolColumn'
 
 export default Column
-export {Column, EditColumn, BaseColumn, ActionColumn, DateColumn, OptionsColumn, SymbolColumn, CheckboxColumn, HtmlColumn, CountColumn, BoolColumn}
+export {Column, BaseColumn, ActionColumn, DateColumn, OptionsColumn, SymbolColumn, CheckboxColumn, HtmlColumn, CountColumn, BoolColumn}

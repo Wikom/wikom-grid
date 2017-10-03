@@ -6,7 +6,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import EditableGrid from '../components/EditableGrid'
-import {initializeGrid, setEditRow, destroyGrid, changeData} from '../actions'
+import {initializeGrid, destroyGrid, changeData} from '../actions'
 import {PAGINATION_COUNT_FORMAT_SHORT} from '../components/Pagination'
 import paginationType from '../components/propTypes/pagination'
 
@@ -15,7 +15,6 @@ const mapStateToProps = (state, {grid}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setEditRow: (grid, idx) => dispatch(setEditRow(grid, idx)),
     initializeGrid: grid => dispatch(initializeGrid(grid)),
     destroyGrid: grid => dispatch(destroyGrid(grid)),
     changeData: (grid, data) => dispatch(changeData(grid, data))

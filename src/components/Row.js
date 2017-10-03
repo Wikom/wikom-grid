@@ -5,15 +5,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {setEditRow} from "../actions";
+import {setNextEditRow} from "../actions";
 
-const Row = ({rowId, children, grid, editable, rowData, setEditRow, ...props}) =>
+const Row = ({rowId, children, grid, editable, rowData, setNextEditRow, ...props}) =>
     <tr>
         {
             React.Children.map(children, (child) => React.cloneElement(child, {
                 grid,
                 rowData,
-                onClick: editable ? () => setEditRow(grid, rowId) : null,
+                onClick: editable ? () => setNextEditRow(grid, rowId) : null,
                 ...props
             }))
         }
@@ -27,7 +27,7 @@ Row.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    setEditRow: (grid, index) => dispatch(setEditRow(grid, index))
+    setNextEditRow: (grid, index) => dispatch(setNextEditRow(grid, index))
 });
 
 export default connect(null, mapDispatchToProps)(Row);

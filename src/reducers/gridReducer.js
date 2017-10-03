@@ -7,6 +7,7 @@ import {actionTypes as formActions} from 'redux-form'
 import queryString from 'query-string'
 
 import * as types from '../actions/actionTypes'
+import * as fieldStatus from '../constants/fieldStatus'
 
 const initialGridState = () => ({
     data: [],
@@ -15,12 +16,29 @@ const initialGridState = () => ({
     selection: [],
     sort: null,
     edit: {
-        row: null,
-        cell: null
+        current: {
+            row: null,
+            cell: null
+        },
+        next: {
+            row: null,
+            cell: null
+        },
+        status: {}
     }
 });
 
 const defaultFilter = {};
+
+const hasFieldWithStatus = (fieldStatus, status) => {
+    for (let key in fieldStatus) {
+        if (fieldStatus.hasOwnProperty(key) && fieldStatus[key] == status) {
+            return true;
+        }
+    }
+
+    return false;
+};
 
 const gridReducer = (state = {}, action) => {
     switch (action.type) {
@@ -49,17 +67,87 @@ const gridReducer = (state = {}, action) => {
 
             return gridState;
         }
-        case types.SETEDITROW: {
+
+        case types.SETNEXTEDITROW: {
             const gridState = Object.assign({}, state);
 
             if (!gridState[action.name]) {
                 gridState[action.name] = initialGridState();
             }
 
-            gridState[action.name].edit.row = action.index;
+            // if no row in edit or no field in edit -> directly set new row
+            if (gridState[action.name].edit.current.row === null ||
+                (!hasFieldWithStatus(gridState[action.name].edit.status, fieldStatus.STATUS_CHANGED) && !hasFieldWithStatus(gridState[action.name].edit.status, fieldStatus.STATUS_INSUBMISSION)
+                )) {
+                gridState[action.name].edit.current.row = action.index;
+                gridState[action.name].edit.next.row = null;
+                gridState[action.name].edit.status = {}
+
+            } else {
+                gridState[action.name].edit.next.row = action.index;
+            }
 
             return gridState;
         }
+        case types.FIELDSAVED: {
+            const gridState = Object.assign({}, state);
+
+            if (!gridState[action.name]) {
+                gridState[action.name] = initialGridState();
+            }
+
+            gridState[action.name].edit.status[action.idx] = fieldStatus.STATUS_SAVED;
+
+            // if edit row is queued and no field in edit: change row.
+            if (gridState[action.name].edit.next.row !== null &&
+                (!hasFieldWithStatus(gridState[action.name].edit.status, fieldStatus.STATUS_CHANGED) && !hasFieldWithStatus(gridState[action.name].edit.status, fieldStatus.STATUS_INSUBMISSION)
+                )) {
+                gridState[action.name].edit.current.row = gridState[action.name].edit.next.row;
+                gridState[action.name].edit.next.row = null;
+                gridState[action.name].edit.status = {}
+            }
+
+            return gridState;
+        }
+        case types.FIELDCHANGED: {
+            const gridState = Object.assign({}, state);
+
+            if (!gridState[action.name]) {
+                gridState[action.name] = initialGridState();
+            }
+
+            gridState[action.name].edit.status[action.idx] = fieldStatus.STATUS_CHANGED;
+
+            if (!hasFieldWithStatus(gridState[action.name].edit.status, fieldStatus.STATUS_INSUBMISSION) &&
+                gridState[action.name].edit.next.row !== null) {
+                gridState[action.name].edit.current.row = gridState[action.name].edit.next.row;
+            }
+
+            return gridState;
+        }
+        case types.FIELDINSUBMISSION: {
+            const gridState = Object.assign({}, state);
+
+            if (!gridState[action.name]) {
+                gridState[action.name] = initialGridState();
+            }
+
+            gridState[action.name].edit.status[action.idx] = fieldStatus.STATUS_INSUBMISSION;
+
+            return gridState;
+        }
+        case types.FIELDSUBMISSIONFAILED: {
+            const gridState = Object.assign({}, state);
+
+            if (!gridState[action.name]) {
+                gridState[action.name] = initialGridState();
+            }
+
+            gridState[action.name].edit.status[action.idx] = fieldStatus.STATUS_ERROR;
+
+            return gridState;
+        }
+
         case types.INITIALIZE_FILTER: {
             const gridState = Object.assign({}, state);
 
@@ -77,16 +165,12 @@ const gridReducer = (state = {}, action) => {
             return gridState;
         }
         case LOCATION_CHANGE: {
-            // console.log('---LOCATION CHANGE---');
-            // console.log(action);
-
             const gridState = Object.assign({}, state);
             const params = queryString.parse(action.payload.search);
             const gridParams = params.grid ? JSON.parse(params.grid) : {};
 
             for (let grid in gridState) {
                 if (!gridParams.hasOwnProperty(grid)) {
-                    console.log(defaultFilter);
                     gridState[grid] = initialGridState();
                     gridState[grid].filter = defaultFilter[grid] || {};
                 }
