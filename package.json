@@ -70,7 +70,7 @@
   "scripts": {
     "start": "npm run babel && npm run webpack",
     "webpack": "webpack --config=production.config.js",
-    "babel": "babel src --out-dir lib",
+    "babel": "babel src --out-dir lib --ignore **/__tests__/* --ignore **/*.test.js",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
@@ -81,6 +81,15 @@
     ],
     "plugins": [
       "transform-object-rest-spread"
+    ]
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text"
     ]
   }
 }

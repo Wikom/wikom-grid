@@ -32,10 +32,10 @@ import {gridReducer} from 'wikom-grid'
 });
 ```
 
-## Grid basis components
+## GridComponent basis components
 Both form components, Form and SimpleForm [...]
 
-### Grid
+### GridComponent
 
 | property (*required)| type | description |
 |---|---|---|
@@ -51,13 +51,13 @@ Both form components, Form and SimpleForm [...]
 | baseUrl* | string | route for data |
 
 ### Columns
-Placed inside Grid - Children will be rendered as columns (from Grid data)
+Placed inside GridComponent - Children will be rendered as columns (from GridComponent data)
 
 ### grid components usage
 
 ```javascript
 import React from 'react'
-import Grid, {ConnectedGrid, Columns, ColTypes} from 'wikom-grid'
+import GridComponent, {ConnectedGrid, Columns, ColTypes} from 'wikom-grid'
 
 const {Column, DateColumn} = ColTypes;
 
@@ -67,12 +67,12 @@ const {Column, DateColumn} = ColTypes;
    exclusively displayed for example only. ...props would do it
    */
 const Inner = ({grid, data, ...props}) =>
-    <Grid grid={grid} data={data} {...props}>
+    <GridComponent grid={grid} data={data} {...props}>
         <Columns>
             <Column name="Name" idx="name"/>
             <DateColumn name="From" idx="from"/>
         </Columns>
-    </Grid>;
+    </GridComponent>;
     
 const MyConnectedGrid = () =>
         <ConnectedGrid

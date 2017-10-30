@@ -115,11 +115,11 @@ export const submitField = ({rowData, idx, url, value, ...rest}) => {
     return submit({url, data});
 
     //ToDo: Nur bei Änderung...
-    if(findInObject(idx, data) != value){
-        data[idx] = value;
-
-        return submit({url, data});
-    } else {
-        return new Promise((resolve) => {resolve(null)});
-    }
+    // if(findInObject(idx, data) != value){
+    //     data[idx] = value;
+    //
+    //     return submit({url, data});
+    // } else {
+    //     return new Promise((resolve) => {resolve(null)});
+    // }
 };

@@ -8,9 +8,9 @@ import BoolColumn from '../BoolColumn'
 import configureStore from 'redux-mock-store'
 import Symbol from 'react-symbol'
 
-const trueString  = 'ja';
+const trueString = 'ja';
 const falseString = 'nein';
-const trueSymbol  = mount(<Symbol symbol={{symbol: "check", className: "text-success"}}/>);
+const trueSymbol = mount(<Symbol symbol={{symbol: "check", className: "text-success"}}/>);
 const falseSymbol = mount(<Symbol symbol={{symbol: "times", className: "text-danger"}}/>);
 
 describe('components', () => {
@@ -21,9 +21,13 @@ describe('components', () => {
                 foo: 'false'
             };
 
-            const falseCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={falseRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const falseCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={falseRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(falseCol.find('td').text()).toBe(falseString);
 
             const trueRowData = {
@@ -31,9 +35,13 @@ describe('components', () => {
                 foo: 'true'
             };
 
-            const trueCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={trueRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const trueCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={trueRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(trueCol.find('td').text()).toBe(trueString);
         });
 
@@ -44,9 +52,13 @@ describe('components', () => {
                 foo: false
             };
 
-            const falseCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={falseRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const falseCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={falseRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(falseCol.find('td').text()).toBe(falseString);
 
             const trueRowData = {
@@ -54,9 +66,13 @@ describe('components', () => {
                 foo: true
             };
 
-            const trueCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={trueRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const trueCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={trueRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(trueCol.find('td').text()).toBe(trueString);
         });
 
@@ -67,9 +83,13 @@ describe('components', () => {
                 foo: 0
             };
 
-            const falseCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={falseRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const falseCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={falseRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(falseCol.find('td').text()).toBe(falseString);
 
             const trueRowData = {
@@ -77,9 +97,13 @@ describe('components', () => {
                 foo: 1
             };
 
-            const trueCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={trueRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const trueCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={trueRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(trueCol.find('td').text()).toBe(trueString);
         });
 
@@ -90,9 +114,13 @@ describe('components', () => {
                 foo: 'n'
             };
 
-            const falseCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={falseRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const falseCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={falseRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(falseCol.find('td').text()).toBe(falseString);
 
             const trueRowData = {
@@ -100,9 +128,13 @@ describe('components', () => {
                 foo: 'j'
             };
 
-            const trueCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={trueRowData} idx="foo" type="string" />
-            </tr></tbody></table>);
+            const trueCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={trueRowData} idx="foo" type="string"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(trueCol.find('td').text()).toBe(trueString);
         });
 
@@ -113,9 +145,13 @@ describe('components', () => {
                 foo: 'n'
             };
 
-            const falseCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={falseRowData} idx="foo" />
-            </tr></tbody></table>);
+            const falseCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={falseRowData} idx="foo"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(falseCol.find('td').find('i').html()).toBe(falseSymbol.html());
 
             const trueRowData = {
@@ -123,10 +159,49 @@ describe('components', () => {
                 foo: 'j'
             };
 
-            const trueCol = mount(<table><tbody><tr>
-                <BoolColumn name="" rowData={trueRowData} idx="foo" />
-            </tr></tbody></table>);
+            const trueCol = mount(<table>
+                <tbody>
+                <tr>
+                    <BoolColumn name="" rowData={trueRowData} idx="foo"/>
+                </tr>
+                </tbody>
+            </table>);
             expect(trueCol.find('td').find('i').html()).toBe(trueSymbol.html());
         });
+
+        it('should render boolean null values from string ("n", "j")', () => {
+            const falseRowData = {
+                id: 1,
+                foo: null
+            };
+
+            const falseCol = mount(
+                <table>
+                    <tbody>
+                    <tr>
+                        <BoolColumn name="" rowData={falseRowData} idx="foo" type="string" withNull={true}/>
+                    </tr>
+                    </tbody>
+                </table>
+            );
+            expect(falseCol.find('td').text()).toBe('');
+
+            const trueRowData = {
+                id: 1,
+                foo: '-1'
+            };
+
+            const trueCol = mount(
+                <table>
+                    <tbody>
+                    <tr>
+                        <BoolColumn name="" rowData={trueRowData} idx="foo" withNull={true}/>
+                    </tr>
+                    </tbody>
+                </table>
+            );
+            expect(trueCol.find('td').text()).toBe('');
+        });
+
     });
 });
