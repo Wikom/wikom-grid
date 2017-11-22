@@ -9,7 +9,7 @@ provides a simple way to load data from server, includes a pagination and table-
 Add wikom-grid to your js project with yarn:
 
 ```javascript
-yexplanationhttps://github.com/Wikom/wikom-grid.git
+yarn add git+https://github.com/Wikom/wikom-grid.git
 ```
 
 or with npm:
