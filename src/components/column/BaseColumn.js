@@ -5,8 +5,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const BaseColumn = ({className, onClick,  children}) => {
-    const tdProps = {};
+const BaseColumn = ({className, onClick, children}) => {
+    const tdProps = {onClick};
 
     switch (typeof className) {
         case 'object':
@@ -20,7 +20,7 @@ const BaseColumn = ({className, onClick,  children}) => {
     }
 
     return (
-        <td {...tdProps} onClick={onClick}>
+        <td {...tdProps}>
             {children}
         </td>
     );

@@ -1,6 +1,6 @@
 {
   "name": "wikom-grid",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "main": "lib/index.js",
   "module": "src/index.js",
   "repository": "git@github.com:Wikom/wikom-grid.git",
@@ -12,14 +12,17 @@
     "dist"
   ],
   "dependencies": {
+    "classnames": "^2.2.5",
     "find-in-object": "https://github.com/Wikom/find-in-object.git",
     "moment": "^2.18.1",
     "prop-types": "^15.5.7",
     "query-string": "^4.3.2",
     "react": "^15.5.4",
     "react-conditional": "https://github.com/Wikom/react-conditional.git",
+    "react-datepicker": "^1.0.4",
     "react-dom": "^15.5.4",
     "react-loading": "https://github.com/Wikom/react-loading.git",
+    "react-onclickoutside": "^6.7.0",
     "react-pager": "^1.2.1",
     "react-redux": "^5.0.2",
     "react-router": "^4.0.0",
@@ -44,6 +47,7 @@
     "enzyme": "^2.9.1",
     "jest": "^21.1.0",
     "jest-cli": "^21.1.0",
+    "jest-css-modules": "^1.1.0",
     "jsdoc": "^3.5.3",
     "jsdoc-to-markdown": "^3.0.0",
     "nock": "^9.0.18",
@@ -90,6 +94,13 @@
       "json",
       "lcov",
       "text"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.(css|scss|less)$": "jest-css-modules"
+    },
+    "moduleNameMapper": {
+      "^.+\\.(css|scss|less)$": "<rootDir>/_config/mockcss.js"
+    }
   }
 }

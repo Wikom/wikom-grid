@@ -1,10 +1,5 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
-import nock from 'nock'
-import thunk from 'redux-thunk'
-import Grid, {ConnectedGrid, Columns, Column} from '../../../index'
-import configureStore from 'redux-mock-store'
-import {Provider} from 'react-redux'
+import {shallow} from 'enzyme'
 import ConnectedGridComponent from "../ConnectedGridComponent";
 import DataProvider from 'wikom-data'
 

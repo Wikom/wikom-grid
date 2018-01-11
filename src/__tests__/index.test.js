@@ -1,5 +1,5 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
+import {mount} from 'enzyme'
 import nock from 'nock'
 import thunk from 'redux-thunk'
 import Grid, {ConnectedGrid, Columns, Column} from '../index'
@@ -16,8 +16,6 @@ function setup(storeData) {
 describe('Integration Tests', () => {
     describe('ConnectedGrid', () => {
         it('should render loading state on pending request', () => {
-            // return; // Connected GridComponent Test not working
-
             const {mockStore} = setup({
                 queries: {test: {isPending: true}},
                 data: {bar: {fee: "test"}},
@@ -45,14 +43,7 @@ describe('Integration Tests', () => {
                 </Provider>
             );
 
-            // console.log(grid.find(InnerGrid).props());
-
             expect(grid.find(InnerGrid).props().isLoading).toBe(true);
-
-            // console.log(mockStore.getState());
-            // console.log(page.html());
-
-            //expect(page.find('tr').find('.pageWaiter-note').length).toBe(1);
         });
 
         it('should render one row for each rowData line', () => {
@@ -81,8 +72,6 @@ describe('Integration Tests', () => {
                     </ConnectedGrid>
                 </Provider>
             );
-
-            console.log(grid.find(InnerGrid).html());
 
             expect(grid.find(InnerGrid).find('tr').length).toBe(4);
         });

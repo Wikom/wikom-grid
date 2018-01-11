@@ -5,7 +5,6 @@
 import React from 'react'
 import {mount} from 'enzyme'
 import BoolColumn from '../BoolColumn'
-import configureStore from 'redux-mock-store'
 import Symbol from 'react-symbol'
 
 const trueString = 'ja';

@@ -5,7 +5,6 @@
 import React from 'react'
 import {mount} from 'enzyme'
 import HtmlColumn from '../HtmlColumn'
-import configureStore from 'redux-mock-store'
 
 
 describe('components', () => {

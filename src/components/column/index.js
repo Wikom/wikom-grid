@@ -12,6 +12,21 @@ import CheckboxColumn from './CheckboxColumn'
 import HtmlColumn from './HtmlColumn'
 import CountColumn from './CountColumn'
 import BoolColumn from './BoolColumn'
+import BooleanColumn from './BooleanColumn'
+import EditableColumn from './EditableColumn'
 
 export default Column
-export {Column, BaseColumn, ActionColumn, DateColumn, OptionsColumn, SymbolColumn, CheckboxColumn, HtmlColumn, CountColumn, BoolColumn}
+export {
+    Column,
+    BaseColumn,
+    ActionColumn,
+    DateColumn,
+    OptionsColumn,
+    SymbolColumn,
+    CheckboxColumn,
+    HtmlColumn,
+    CountColumn,
+    BoolColumn,
+    BooleanColumn,
+    EditableColumn
+}

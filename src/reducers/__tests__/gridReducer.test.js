@@ -2,10 +2,11 @@ import reducer from '../gridReducer'
 import * as types from '../../actions/actionTypes'
 import {LOCATION_CHANGE} from 'react-router-redux'
 import {actionTypes as formActions} from 'redux-form'
-import * as status from '../../constants/fieldStatus'
 import queryString from 'query-string'
+import {EDIT_START} from "../../actions/actionTypes";
+import {SUBMIT_STATUS_SUCCESS, SUBMIT_STATUS_PENDING, SUBMIT_STATUS_FAILURE} from '../../constants'
 
-const gridName = 'test_grid';
+const gridName = 'test';
 let initializedGridState = reducer(undefined, {
     type: types.INITIALIZE,
     name: gridName
@@ -32,15 +33,11 @@ describe('grid reducer', () => {
                 selection: [],
                 sort: null,
                 edit: {
-                    current: {
-                        row: null,
-                        cell: null
-                    },
-                    next: {
-                        row: null,
-                        cell: null
-                    },
-                    status: {}
+                    colId: null,
+                    rowId: null,
+                    status: {},
+                    tmp: {},
+                    values: {}
                 }
             }
         });
@@ -276,7 +273,7 @@ describe('grid reducer', () => {
         const initializeFormAction = {
             type: formActions.INITIALIZE,
             meta: {
-                form: 'test_gridFilter'
+                form: 'testFilter'
             },
             payload: {
                 foo: 'bar'
@@ -295,7 +292,7 @@ describe('grid reducer', () => {
         const initializeFormAction = {
             type: formActions.INITIALIZE,
             meta: {
-                form: 'test_gridFilter'
+                form: 'testFilter'
             }
         };
 
@@ -308,13 +305,13 @@ describe('grid reducer', () => {
         const initializeFormAction = {
             type: formActions.INITIALIZE,
             meta: {
-                form: 'other_gridFilter'
+                form: 'otherFilter'
             }
         };
 
         const expectedGridState = Object.assign({}, initializedGridState, reducer(undefined, {
             type: types.INITIALIZE,
-            name: 'other_grid'
+            name: 'other'
         }));
 
         expect(reducer(initializedGridState, initializeFormAction)).toEqual(expectedGridState);
@@ -333,302 +330,136 @@ describe('grid reducer', () => {
         expect(reducer(initializedGridState, initializeFormAction)).toEqual(expectedGridState);
     });
 
-    it('should handle SETNEXTEDITROW', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {}
+    it('should handle EDIT_START', () => {
+        const editStartAction = {
+            type: EDIT_START,
+            name: gridName,
+            rowId: 1,
+            colId: 1
         };
 
-        expect(reducer(initializedGridState, {
-            type: types.SETNEXTEDITROW,
-            name: gridName,
-            index: 1
-        })).toEqual(expectedGridState);
+        const expectedGridState = Object.assign({}, initializedGridState);
+        expectedGridState[gridName].edit.colId = 1;
+        expectedGridState[gridName].edit.rowId = 1;
+
+        expect(reducer(initializedGridState, editStartAction)).toEqual(expectedGridState);
     });
 
-    it('should handle SETNEXTEDITROW with no grid data in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {}
-        };
-
-        expect(reducer({}, {
-            type: types.SETNEXTEDITROW,
-            name: gridName,
-            index: 1
-        })).toEqual(expectedGridState);
-    });
-
-    it('should handle SETNEXTEDITROW with previous edit row present', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: 2,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_SAVED,
-                bar: status.STATUS_INSUBMISSION
+    it('should handle redux-form START_SUBMIT', () => {
+        const startSubmitAction = {
+            type: formActions.START_SUBMIT,
+            meta: {
+                form: 'gridedit_test_1_1'
             }
         };
 
-        const oldGridState = Object.assign({}, initializedGridState);
-        oldGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_SAVED,
-                bar: status.STATUS_INSUBMISSION
+        const expectedGridState = Object.assign({}, initializedGridState);
+        expectedGridState[gridName].edit.status = {1: {1: SUBMIT_STATUS_PENDING}};
+
+        expect(reducer(initializedGridState, startSubmitAction)).toEqual(expectedGridState);
+    });
+
+    it('should handle redux-form START_SUBMIT for different form', () => {
+        const startSubmitAction = {
+            type: formActions.START_SUBMIT,
+            meta: {
+                form: 'anything_else'
             }
         };
 
-        expect(reducer(oldGridState, {
-            type: types.SETNEXTEDITROW,
-            name: gridName,
-            index: 2
-        })).toEqual(expectedGridState);
+        const expectedGridState = Object.assign({}, initializedGridState);
+
+        expect(reducer(initializedGridState, startSubmitAction)).toEqual(expectedGridState);
     });
 
-    it('should handle FIELDSAVED', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_SAVED
+    it('should handle redux-form SET_SUBMIT_FAILED', () => {
+        const failedSubmitAction = {
+            type: formActions.SET_SUBMIT_FAILED,
+            meta: {
+                form: 'gridedit_test_1_1'
             }
         };
 
-        expect(reducer(initializedGridState, {
-            type: types.FIELDSAVED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
+        const expectedGridState = Object.assign({}, initializedGridState);
+        expectedGridState[gridName].edit.status = {1: {1: SUBMIT_STATUS_FAILURE}};
+
+        expect(reducer(initializedGridState, failedSubmitAction)).toEqual(expectedGridState);
     });
 
-    it('should handle FIELDSAVED with no grid data in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit.status = {
-            foo: status.STATUS_SAVED
-        };
-
-        expect(reducer({}, {
-            type: types.FIELDSAVED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
-    });
-
-    it('should handle FIELDSAVED with next row in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 2,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {}
-        };
-
-        const oldGridState = Object.assign({}, initializedGridState);
-        oldGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: 2,
-                cell: null
-            },
-            status: {}
-        };
-
-        expect(reducer(oldGridState, {
-            type: types.FIELDSAVED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
-    });
-
-    it('should handle FIELDCHANGED', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_CHANGED
+    it('should handle redux-form SET_SUBMIT_SUCCEEDED', () => {
+        const succeededSubmitAction = {
+            type: formActions.SET_SUBMIT_SUCCEEDED,
+            meta: {
+                form: 'gridedit_test_1_1'
             }
         };
 
-        expect(reducer(initializedGridState, {
-            type: types.FIELDCHANGED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
+        const expectedGridState = Object.assign({}, initializedGridState);
+        expectedGridState[gridName].edit.status = {1: {1: SUBMIT_STATUS_SUCCESS}};
+
+        expect(reducer(initializedGridState, succeededSubmitAction)).toEqual(expectedGridState);
     });
 
-    it('should handle FIELDCHANGED with no grid data in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit.status = {
-            foo: status.STATUS_CHANGED
+    it('should handle redux-form SET_SUBMIT_SUCCEEDED after previous submit and with tmp values', () => {
+        const succeededSubmitAction = {
+            type: formActions.SET_SUBMIT_SUCCEEDED,
+            meta: {
+                form: 'gridedit_test_1_1'
+            }
+        };
+        const stateBefore = Object.assign({}, initializedGridState);
+        stateBefore[gridName].edit.values = {1: {2: 'foo'}};
+        stateBefore[gridName].edit.tmp = {1: {1: 'foo'}};
+
+        const expectedGridState = Object.assign({}, stateBefore);
+        expectedGridState[gridName].edit.status = {1: {1: SUBMIT_STATUS_SUCCESS}};
+
+        expect(reducer(stateBefore, succeededSubmitAction)).toEqual(expectedGridState);
+    });
+
+    it('should handle redux-form CHANGE', () => {
+        const changeAction = {
+            type: formActions.CHANGE,
+            meta: {
+                form: 'gridedit_test_1_1'
+            },
+            payload: 'foo'
         };
 
-        expect(reducer({}, {
-            type: types.FIELDCHANGED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
-    });
-
-    it('should handle FIELDCHANGED with next row in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 2,
-                cell: null
-            },
-            next: {
-                row: 2,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_CHANGED
+        const expectedGridState = {
+            test: {
+                data: [],
+                filter: {},
+                pagination: {},
+                selection: [],
+                sort: null,
+                edit: {
+                    colId: null,
+                    rowId: null,
+                    status: {1: {1: undefined}},
+                    tmp: {1: {1: 'foo'}},
+                    values: {}
+                }
             }
         };
 
-        const oldGridState = Object.assign({}, initializedGridState);
-        oldGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: 2,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_CHANGED
-            }
-        };
-
-        expect(reducer(oldGridState, {
-            type: types.FIELDCHANGED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
+        expect(reducer(initializedGridState, changeAction)).toEqual(expectedGridState);
     });
 
-    it('should handle FIELDINSUBMISSION', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
+    it('should handle redux-form CHANGE with previous change', () => {
+        const changeAction = {
+            type: formActions.CHANGE,
+            meta: {
+                form: 'gridedit_test_1_1'
             },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_INSUBMISSION
-            }
+            payload: 'bar'
         };
 
-        expect(reducer(initializedGridState, {
-            type: types.FIELDINSUBMISSION,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
+        const stateBefore = Object.assign({}, initializedGridState);
+        stateBefore[gridName].edit.tmp = {1: {1: 'foo'}};
+        const expectedGridState = Object.assign({}, stateBefore);
+        expectedGridState[gridName].edit.tmp = {1: {1: 'bar'}};
+
+        expect(reducer(stateBefore, changeAction)).toEqual(expectedGridState);
     });
-
-    it('should handle FIELDINSUBMISSION with no grid data in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit.status = {
-            foo: status.STATUS_INSUBMISSION
-        };
-
-        expect(reducer({}, {
-            type: types.FIELDINSUBMISSION,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
-    });
-
-    it('should handle FIELDSUBMISSIONFAILED', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit = {
-            current: {
-                row: 1,
-                cell: null
-            },
-            next: {
-                row: null,
-                cell: null
-            },
-            status: {
-                foo: status.STATUS_ERROR
-            }
-        };
-
-        expect(reducer(initializedGridState, {
-            type: types.FIELDSUBMISSIONFAILED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
-    });
-
-    it('should handle FIELDSUBMISSIONFAILED with no grid data in store', () => {
-        const expectedGridState = Object.assign({}, initializedGridState);
-        expectedGridState[gridName].edit.status = {
-            foo: status.STATUS_ERROR
-        };
-
-        expect(reducer({}, {
-            type: types.FIELDSUBMISSIONFAILED,
-            name: gridName,
-            idx: 'foo'
-        })).toEqual(expectedGridState);
-    });
-
 });

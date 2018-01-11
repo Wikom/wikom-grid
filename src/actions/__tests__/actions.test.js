@@ -3,11 +3,10 @@ import thunk from 'redux-thunk'
 import queryString from 'query-string'
 import {applyFilter, changePage, changePageSize, changeSort,
     initializeGrid, destroyGrid, initializeFilter, destroyFilter, changeData, changeSelection,
-    setNextEditRow, fieldChanged, fieldSaved, fieldInSubmission, fieldSubmissionFailed, submitField
+    editStart, editEnd
 } from '../'
 import * as types from '../actionTypes'
 import {LOCATION_CHANGE, CALL_HISTORY_METHOD} from 'react-router-redux'
-import nock from 'nock'
 
 const name = 'grid_name';
 
@@ -125,26 +124,53 @@ describe('Grid actions', () => {
             checkStore(expected_2, 2);
         });
 
-        it('should submit a field value', done => {
-            nock('https://localhost/')
-                .put('/save/1', {
-                    id: 1,
-                    name: 'test'
-                })
-                .reply(200, {data: {id: 1, name: 'test'}});
+        it('should end editing mode for grid', done => {
+            const store = mockStore({grid: {
+                [name]: {
+                    edit: {
+                        rowId: 1,
+                        colId: 1
+                    }
+                }
+            }});
 
-            store.dispatch(submitField({
-                rowData: {id: 1, name: 'old_value'},
-                idx: 'name',
-                url: 'https://localhost/save',
-                value: 'test'
-            })).then(result => {
-                expect(result.status).toBe(200);
-                expect(result.body).toEqual({ data: { id: 1, name: 'test' } });
+            store.dispatch(editEnd(name, 1, 1));
+
+            const check = () => {
+                const actions = store.getActions();
+
+                expect(actions.length).toBe(1);
+                expect(actions[0].type).toBe(types.EDIT_START);
 
                 done();
-            });
+            };
+
+            setTimeout(check, 200);
         });
+
+        it('should do nothing if editEnd is fired from cell not in editing mode', done => {
+            const store = mockStore({grid: {
+                [name]: {
+                    edit: {
+                        rowId: 1,
+                        colId: 1
+                    }
+                }
+            }});
+
+            store.dispatch(editEnd(name, 1, 2));
+
+            const check = () => {
+                const actions = store.getActions();
+
+                expect(actions.length).toBe(0);
+
+                done();
+            };
+
+            setTimeout(check, 200);
+        });
+
     });
 
     describe('Sync Grid actions', () => {
@@ -223,55 +249,17 @@ describe('Grid actions', () => {
             expect(changeSelection(name, target)).toEqual(expected);
         });
 
-        it('should set a row in edit mode', () => {
+        it('should set a cell in edit mode', () => {
             const expected = {
-                type: types.SETNEXTEDITROW,
+                type: types.EDIT_START,
                 name,
-                index: 1
+                rowId: 1,
+                colId: 1
             };
 
-            expect(setNextEditRow(name, 1)).toEqual(expected);
+            expect(editStart(name, 1, 1)).toEqual(expected);
         });
 
-        it('should change edit field', () => {
-            const expected = {
-                type: types.FIELDCHANGED,
-                name,
-                idx: 'field_1'
-            };
-
-            expect(fieldChanged(name, 'field_1')).toEqual(expected);
-        });
-
-        it('should mark a field as saved', () => {
-            const expected = {
-                type: types.FIELDSAVED,
-                name,
-                idx: 'field_1'
-            };
-
-            expect(fieldSaved(name, 'field_1')).toEqual(expected);
-        });
-
-        it('should mark a field as in submission', () => {
-            const expected = {
-                type: types.FIELDINSUBMISSION,
-                name,
-                idx: 'field_1'
-            };
-
-            expect(fieldInSubmission(name, 'field_1')).toEqual(expected);
-        });
-
-        it('should mark a field as submission failed', () => {
-            const expected = {
-                type: types.FIELDSUBMISSIONFAILED,
-                name,
-                idx: 'field_1'
-            };
-
-            expect(fieldSubmissionFailed(name, 'field_1')).toEqual(expected);
-        });
 
     });
 

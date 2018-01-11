@@ -9,8 +9,6 @@ import {actionTypes} from 'redux-form'
 import {INITIALIZE_FILTER} from '../../../actions/actionTypes'
 import {CALL_HISTORY_METHOD} from 'react-router-redux'
 
-const mockAction = jest.fn();
-
 const setup = storeData => {
     const mockStore = configureStore([thunk])(storeData);
     return {

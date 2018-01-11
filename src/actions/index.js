@@ -5,8 +5,6 @@
 import {replace} from 'react-router-redux'
 import queryString from 'query-string'
 import * as types from './actionTypes'
-import {submit} from 'wikom-data'
-import findInObject from 'find-in-object'
 
 const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
     const location = getState().routing.location;
@@ -50,35 +48,6 @@ export const initializeGrid = (name) => ({
     name
 });
 
-export const setNextEditRow = (name, index) => ({
-    type: types.SETNEXTEDITROW,
-    name,
-    index
-});
-
-export const fieldChanged = (name,idx) => ({
-    type: types.FIELDCHANGED,
-    name,
-    idx
-});
-
-export const fieldSaved = (name,idx) => ({
-    type: types.FIELDSAVED,
-    name,
-    idx
-});
-
-export const fieldInSubmission = (name, idx) => ({
-    type: types.FIELDINSUBMISSION,
-    name,
-    idx
-});
-export const fieldSubmissionFailed = (name, idx) => ({
-    type: types.FIELDSUBMISSIONFAILED,
-    name,
-    idx
-});
-
 export const destroyGrid = (name) => ({
     type: types.DESTROY,
     name
@@ -108,18 +77,20 @@ export const destroyFilter = (name) => ({
     name
 });
 
-export const submitField = ({rowData, idx, url, value, ...rest}) => {
-    let data = rowData;
+export const editStart = (name, rowId, colId) => ({
+    type: types.EDIT_START,
+    name,
+    rowId,
+    colId
+});
 
-    data[idx] = value;
-    return submit({url, data});
+export const editEnd = (name, rowId, colId) => (dispatch, getState) => {
+    const gridState = getState().grid[name].edit;
+    const editEndFn = () => {
+        if (rowId === gridState.rowId && colId === gridState.colId) {
+            dispatch(editStart(name, null, null));
+        }
+    };
 
-    //ToDo: Nur bei Änderung...
-    // if(findInObject(idx, data) != value){
-    //     data[idx] = value;
-    //
-    //     return submit({url, data});
-    // } else {
-    //     return new Promise((resolve) => {resolve(null)});
-    // }
+    setTimeout(editEndFn, 100);
 };

@@ -1,5 +1,5 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
+import {mount} from 'enzyme'
 import CheckboxHeaderContainer from '../CheckboxHeaderContainer'
 import configureStore from 'redux-mock-store'
 import {Provider} from 'react-redux'

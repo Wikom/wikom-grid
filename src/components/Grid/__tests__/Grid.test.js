@@ -3,7 +3,6 @@
  */
 
 import React from 'react'
-import * as types from '../../../actions/actionTypes'
 import {mount} from 'enzyme'
 import Grid, {Columns, Column} from '../../../index'
 import configureStore from 'redux-mock-store'
@@ -19,23 +18,21 @@ function setupStore(storeData) {
 describe('components', () => {
     describe('Grid', () => {
         it('should render loading state ', () => {
-            const {mockStore} = setupStore({
-            });
+            const {mockStore} = setupStore({});
 
-            const page = mount(<Grid store={mockStore} isLoading={true} grid="test" />);
+            const page = mount(<Grid store={mockStore} isLoading={true} grid="test"/>);
 
             expect(page.find('tr').find('.pageWaiter-note').length).toBe(1);
         });
 
         it('display "no results"-message on empty data', () => {
-            const {mockStore} = setupStore({
-            });
+            const {mockStore} = setupStore({});
 
             const page = mount(
                 <Grid store={mockStore} isLoading={false} grid="test">
                     <Columns>
-                        <Column name="Test 01" idx="test01" />
-                        <Column name="Test 02" idx="test02" />
+                        <Column name="Test 01" idx="test01"/>
+                        <Column name="Test 02" idx="test02"/>
                     </Columns>
                 </Grid>);
 
@@ -43,8 +40,7 @@ describe('components', () => {
         });
 
         it('three data entrys sould result in three tbody rows', () => {
-            const {mockStore} = setupStore({
-            });
+            const {mockStore} = setupStore({});
 
             const data = [
                 {test01: 'foo', test02: 'bar'},
@@ -52,33 +48,29 @@ describe('components', () => {
                 {test01: 'foo', test02: 'bar'}
             ];
 
-            const page = mount(<Provider store={mockStore}><Grid store={mockStore} isLoading={false} data={data} grid="test">
-                <Columns>
-                    <Column name="Test 01" idx="test01" />
-                    <Column name="Test 02" idx="test02" />
-                </Columns>
-            </Grid></Provider>);
-            // const page = mount(
-            //     <GridComponent store={mockStore} isLoading={false} data={data} grid="test">
-            //         <Columns>
-            //             <Column name="Test 01" idx="test01" />
-            //             <Column name="Test 02" idx="test02" />
-            //         </Columns>
-            //     </GridComponent>);
+            const page = mount(
+                <Provider store={mockStore}>
+                    <Grid store={mockStore} isLoading={false} data={data} grid="test">
+                        <Columns>
+                            <Column name="Test 01" idx="test01"/>
+                            <Column name="Test 02" idx="test02"/>
+                        </Columns>
+                    </Grid>
+                </Provider>
+            );
 
             expect(page.find('tbody').find('tr').length).toBe(3);
         });
 
         it('className for table?', () => {
-            const {mockStore} = setupStore({
-            });
+            const {mockStore} = setupStore({});
             const className = 'foobar';
 
             const page = mount(
                 <Grid store={mockStore} isLoading={false} grid="test" className={className}>
                     <Columns>
-                        <Column name="Test 01" idx="test01" />
-                        <Column name="Test 02" idx="test02" />
+                        <Column name="Test 01" idx="test01"/>
+                        <Column name="Test 02" idx="test02"/>
                     </Columns>
                 </Grid>);
 
