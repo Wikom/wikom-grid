@@ -5,10 +5,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Row = ({children, grid, rowData}) =>
+const Row = ({children, grid, rowData, ...props}) =>
     <tr>
         {
-            React.Children.map(children, (child) => React.cloneElement(child, {grid, rowData}))
+            React.Children.map(children, (child, colId) => React.cloneElement(child, {
+                grid,
+                rowData,
+                colId,
+                ...props
+            }))
         }
     </tr>;
 
@@ -18,4 +23,4 @@ Row.propTypes = {
     rowData: PropTypes.object.isRequired
 };
 
-export default Row;
+export default Row

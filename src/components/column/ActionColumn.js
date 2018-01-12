@@ -31,7 +31,7 @@ const createActions = (children, rowData, idx) => {
     });
 };
 
-const ActionColumn = ({name, rowData, idx, children, className, ...rest}) => {
+const ActionColumn = ({name, rowData, idx, children, className, onClick, ...rest}) => {
     const actions = createActions(children, rowData, idx);
 
     switch (typeof className){

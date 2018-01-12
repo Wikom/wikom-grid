@@ -14,6 +14,7 @@ import Filter from './components/Filter'
 import gridReducer from './reducers/gridReducer'
 import * as gridActions from './actions'
 import * as paginationTypes from './components/Pagination'
+import * as FormComponents from './components/formComponents'
 
 export default Grid
 export {
@@ -28,5 +29,6 @@ export {
     Filter,
     gridReducer,
     gridActions,
-    paginationTypes
+    paginationTypes,
+    FormComponents
 }

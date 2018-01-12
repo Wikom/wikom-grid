@@ -76,3 +76,21 @@ export const destroyFilter = (name) => ({
     type: types.DESTROY_FILTER,
     name
 });
+
+export const editStart = (name, rowId, colId) => ({
+    type: types.EDIT_START,
+    name,
+    rowId,
+    colId
+});
+
+export const editEnd = (name, rowId, colId) => (dispatch, getState) => {
+    const gridState = getState().grid[name].edit;
+    const editEndFn = () => {
+        if (rowId === gridState.rowId && colId === gridState.colId) {
+            dispatch(editStart(name, null, null));
+        }
+    };
+
+    setTimeout(editEndFn, 100);
+};

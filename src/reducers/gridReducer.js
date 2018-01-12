@@ -7,13 +7,21 @@ import {actionTypes as formActions} from 'redux-form'
 import queryString from 'query-string'
 
 import * as types from '../actions/actionTypes'
+import * as submitStatus from '../constants'
 
 const initialGridState = () => ({
     data: [],
     filter: {},
     pagination: {},
     selection: [],
-    sort: null
+    sort: null,
+    edit: {
+        rowId: null,
+        colId: null,
+        status: {},
+        values: {},
+        tmp: {}
+    }
 });
 
 const defaultFilter = {};
@@ -45,6 +53,7 @@ const gridReducer = (state = {}, action) => {
 
             return gridState;
         }
+
         case types.INITIALIZE_FILTER: {
             const gridState = Object.assign({}, state);
 
@@ -62,16 +71,12 @@ const gridReducer = (state = {}, action) => {
             return gridState;
         }
         case LOCATION_CHANGE: {
-            // console.log('---LOCATION CHANGE---');
-            // console.log(action);
-
             const gridState = Object.assign({}, state);
             const params = queryString.parse(action.payload.search);
             const gridParams = params.grid ? JSON.parse(params.grid) : {};
 
             for (let grid in gridState) {
                 if (!gridParams.hasOwnProperty(grid)) {
-                    console.log(defaultFilter);
                     gridState[grid] = initialGridState();
                     gridState[grid].filter = defaultFilter[grid] || {};
                 }
@@ -128,6 +133,68 @@ const gridReducer = (state = {}, action) => {
 
             return gridState;
         }
+
+        case types.EDIT_START: {
+            const gridState = {...state};
+
+            gridState[action.name].edit.rowId = action.rowId;
+            gridState[action.name].edit.colId = action.colId;
+
+            return gridState;
+        }
+
+        case formActions.START_SUBMIT:
+        case formActions.SET_SUBMIT_SUCCEEDED:
+        case formActions.SET_SUBMIT_FAILED:
+        case formActions.CHANGE: {
+            const gridState = {...state};
+
+            const formName = action.meta && action.meta.form;
+            const nameParts = formName.split('_');
+
+            if (nameParts[0] === 'gridedit') {
+                const name = nameParts[1];
+                const rowId = nameParts[2];
+                const colId = nameParts[3];
+
+                if (!gridState[name].edit.status[rowId]) {
+                    gridState[name].edit.status[rowId] = {};
+                }
+
+                let status = gridState[name].edit.status[rowId][colId];
+
+                switch (action.type) {
+                    case formActions.START_SUBMIT:
+                        status = submitStatus.SUBMIT_STATUS_PENDING;
+                        break;
+                    case formActions.SET_SUBMIT_SUCCEEDED:
+                        status = submitStatus.SUBMIT_STATUS_SUCCESS;
+                        if (!gridState[name].edit.values[rowId]) {
+                            gridState[name].edit.values[rowId] = {};
+                        }
+                        gridState[name].edit.values[rowId][colId] = gridState[name].edit.tmp
+                            && gridState[name].edit.tmp[rowId]
+                            && gridState[name].edit.tmp[rowId][colId];
+                        break;
+                    case formActions.SET_SUBMIT_FAILED:
+                        status = submitStatus.SUBMIT_STATUS_FAILURE;
+                        break;
+                    case formActions.CHANGE:
+                        if (!gridState[name].edit.tmp[rowId]) {
+                            gridState[name].edit.tmp[rowId] = {};
+                        }
+                        gridState[name].edit.tmp[rowId][colId] = action.payload;
+                        break;
+                }
+
+                gridState[name].edit.status[rowId][colId] = status;
+
+                return gridState;
+            }
+
+            return state;
+        }
+
         default:
             return state;
     }
