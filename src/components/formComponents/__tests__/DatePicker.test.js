@@ -18,11 +18,30 @@ describe('components', () => {
 
             expect(component.find(Picker).prop('selected').format('YYYY-MM-DD')).toEqual(value.format('YYYY-MM-DD'));
 
-            component.find(Picker).prop('onChange')('2001-01-01', {});
+            component.find(Picker).prop('onChange')(moment.utc('2001-01-01', 'YYYY-MM-DDD'), {});
 
             expect(onChange).toHaveBeenCalledWith('2001-01-01', {});
 
-            component.find(Picker).prop('onChange')('', {});
+            component.find(Picker).prop('onChange')(null, {});
+
+            expect(onChange).toHaveBeenCalledWith('', {});
+        });
+
+        it('should render DatePicker component without date', () => {
+            const onChange = jest.fn();
+            const input = {
+                value: '',
+                onChange: onChange
+            };
+            const component = shallow(<DatePicker input={input}/>);
+
+            expect(component.find(Picker).prop('selected')).toEqual(null);
+
+            component.find(Picker).prop('onChange')(moment.utc('2001-01-01', 'YYYY-MM-DDD'), {});
+
+            expect(onChange).toHaveBeenCalledWith('2001-01-01', {});
+
+            component.find(Picker).prop('onChange')(null, {});
 
             expect(onChange).toHaveBeenCalledWith('', {});
         });

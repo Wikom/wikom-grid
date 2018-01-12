@@ -7,18 +7,19 @@ import moment from 'moment'
 import locale from 'moment/locale/de'
 
 const DatePicker = ({input, placeholder, defaultValue, dateFormat, autoFocus}) => {
-    const value = input.value && moment.utc(input.value, [dateFormat, 'YYYY-MM-DD', moment.ISO_8601]);
-    const valueForPicker = value && value.format('YYYY-MM-DD');
+    const value = input.value && moment.utc(input.value, [dateFormat, 'YYYY-MM-DD', moment.ISO_8601]) || null;
+    const valueForPicker = value && value.format(dateFormat) || '';
     const handleChange = (value, evt) => {
         const formatted = value && moment.utc(value, [dateFormat, 'YYYY-MM-DD', moment.ISO_8601]);
 
-        input.onChange(formatted && formatted.format('YYYY-MM-DD') || '', evt);
+        input.onChange(value && value.format('YYYY-MM-DD') || '', evt);
     };
 
     return (
         <Picker
             {...input}
             onChange={handleChange}
+            locale="de-de"
             dateFormat={dateFormat}
             className="form-control"
             value={valueForPicker}
