@@ -58,7 +58,8 @@ describe('components', () => {
             const onBlur = jest.fn();
 
             const component = mount(<Checkbox input={{onBlur: onBlur}}/>);
-            component.find(Checkbox).node.__outsideClickHandler();
+
+            component.find(Checkbox).instance().__outsideClickHandler();
 
             expect(onBlur.mock.calls.length).toBe(1);
         });

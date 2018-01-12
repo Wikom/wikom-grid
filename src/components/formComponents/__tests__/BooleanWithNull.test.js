@@ -120,7 +120,8 @@ describe('components', () => {
             const onBlur = jest.fn();
 
             const component = mount(<BooleanWithNull input={{onBlur: onBlur}}/>);
-            component.find(BooleanWithNull).node.__outsideClickHandler();
+
+            component.find(BooleanWithNull).instance().__outsideClickHandler();
 
             expect(onBlur.mock.calls.length).toBe(1);
         });

@@ -59,19 +59,19 @@ describe('components', () => {
 
             expect(gridFilter.find('form').find('div.box').exists()).toBe(true);
 
-            expect(mockStore.getActions().length).toBe(2);
+            expect(mockStore.getActions().length).toBe(3);
             expect(mockStore.getActions()[0].type).toBe(actionTypes.INITIALIZE);
-            expect(mockStore.getActions()[1].type).toBe(INITIALIZE_FILTER);
+            expect(mockStore.getActions()[mockStore.getActions().length - 1].type).toBe(INITIALIZE_FILTER);
 
             gridFilter.find('form').simulate('submit');
 
-            expect(mockStore.getActions().length).toBe(5);
-            expect(mockStore.getActions()[3].type).toBe(CALL_HISTORY_METHOD);
+            expect(mockStore.getActions().length).toBe(6);
+            expect(mockStore.getActions()[mockStore.getActions().length - 2].type).toBe(CALL_HISTORY_METHOD);
 
             gridFilter.find('i.fa-undo').simulate('click');
 
-            expect(mockStore.getActions().length).toBe(6);
-            expect(mockStore.getActions()[5].type).toBe(CALL_HISTORY_METHOD);
+            expect(mockStore.getActions().length).toBe(7);
+            expect(mockStore.getActions()[mockStore.getActions().length - 1].type).toBe(CALL_HISTORY_METHOD);
         });
     });
 });

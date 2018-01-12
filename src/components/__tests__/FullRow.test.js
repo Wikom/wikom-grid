@@ -16,7 +16,7 @@ describe('components', () => {
             );
 
             expect(table.contains('INNER')).toBe(true);
-            expect(table.html()).toBe('<table><tbody><tr><td colspan="2" class="text-center">INNER</td></tr></tbody></table>');
+            expect(table.html()).toMatch('<table><tbody><tr><td colSpan="2" class="text-center">INNER</td></tr></tbody></table>');
         });
     });
 });

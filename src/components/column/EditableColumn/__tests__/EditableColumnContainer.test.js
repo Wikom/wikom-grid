@@ -244,11 +244,11 @@ describe('components', () => {
             table.find(EditableColumnComponent).prop('onBlur')();
 
             const check = () => {
-                expect(store.getActions().length).toBe(3);
-                expect(store.getActions()[2].type).toEqual(EDIT_START);
-                expect(store.getActions()[2].name).toEqual('test_grid');
-                expect(store.getActions()[2].rowId).toEqual(null);
-                expect(store.getActions()[2].colId).toEqual(null);
+                expect(store.getActions().length).toBe(4);
+                expect(store.getActions()[3].type).toEqual(EDIT_START);
+                expect(store.getActions()[3].name).toEqual('test_grid');
+                expect(store.getActions()[3].rowId).toEqual(null);
+                expect(store.getActions()[3].colId).toEqual(null);
 
                 done();
             };
