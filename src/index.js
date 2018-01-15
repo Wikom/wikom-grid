@@ -10,7 +10,9 @@ import * as ColTypes from './components/column'
 import GridAction from './components/GridAction'
 import GridLink from './components/GridLink'
 import GridFilter from './components/GridFilter'
+import GridDetailFilter from './components/GridDetailFilter'
 import Filter from './components/Filter'
+import DetailFilter from './components/DetailFilter'
 import gridReducer from './reducers/gridReducer'
 import * as gridActions from './actions'
 import * as paginationTypes from './components/Pagination'
@@ -26,7 +28,9 @@ export {
     GridAction,
     GridLink,
     GridFilter,
+    GridDetailFilter,
     Filter,
+    DetailFilter,
     gridReducer,
     gridActions,
     paginationTypes,

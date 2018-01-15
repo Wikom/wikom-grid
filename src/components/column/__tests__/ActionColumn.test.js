@@ -25,6 +25,8 @@ describe('components', () => {
                 id: 1
             };
 
+            const SpecialAction = ({rowData}) => <div>{JSON.stringify(rowData)}</div>;
+
             const table = mount(
                 <Provider store={mockStore}>
                     <MemoryRouter>
@@ -34,6 +36,7 @@ describe('components', () => {
                             <ActionColumn name="Aktionen" rowData={rowData}>
                                 <GridLink symbol="pencil" to="http://localhost/details"/>
                                 <GridAction symbol="trash" action={mockAction}/>
+                                <SpecialAction/>
                                 <span>TEST</span>
                             </ActionColumn>
                         </tr>

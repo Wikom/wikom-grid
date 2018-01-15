@@ -25,9 +25,12 @@ const createActions = (children, rowData, idx) => {
                 idx
             })
         }
-        return React.cloneElement(child, {
-            rowData
-        })
+        if (React.isValidElement(child) && typeof child.type === 'function') {
+            return React.cloneElement(child, {
+                rowData
+            })
+        }
+        return child;
     });
 };
 

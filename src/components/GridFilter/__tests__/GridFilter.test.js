@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import GridFilter from "../";
-import Filter from '../../Filter';
+import Filter from '../../Filter/index';
 import {actionTypes} from 'redux-form'
 import {INITIALIZE_FILTER} from '../../../actions/actionTypes'
 import {CALL_HISTORY_METHOD} from 'react-router-redux'
@@ -53,6 +53,7 @@ describe('components', () => {
                     <GridFilter grid="test_grid">
                         <Filter name="test_filter"/>
                         <Filter name="other_filter"/>
+                        <span>NO FILTER</span>
                     </GridFilter>
                 </Provider>
             );
