@@ -13,7 +13,21 @@ const name = 'grid_name';
 describe('Grid actions', () => {
     describe('Async Grid actions', () => {
         const mockStore = configureMockStore([thunk]);
-        const store = mockStore({routing: {location: {pathname: '/foo'}}});
+        const store = mockStore({
+            routing: {
+                location: {
+                    pathname: '/foo'
+                }
+            },
+            form: {
+                grid_nameFilter: {
+                    registeredFields: {
+                        filter_1: {},
+                        filter_2: {}
+                    }
+                }
+            }
+        });
         const checkStore = (search, actionCount = 1, st = store) => {
             const actions = st.getActions();
 
@@ -63,9 +77,23 @@ describe('Grid actions', () => {
                     }
                 })
             });
-            const other_store = mockStore({routing: {location: {pathname: '/foo', search}}});
+            const other_store = mockStore({
+                routing: {
+                    location: {
+                        pathname: '/foo', search
+                    }
+                },
+                form: {
+                    grid_nameFilter: {
+                        registeredFields: {
+                            filter_1: {},
+                            filter_2: {}
+                        }
+                    }
+                }
+            });
 
-            other_store.dispatch(applyFilter(null, name));
+            other_store.dispatch(applyFilter({}, name));
 
             checkStore('', 1, other_store);
         });

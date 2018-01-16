@@ -40,6 +40,13 @@ describe('components', () => {
                 routing: {
                     location: 'http://www.foo.bar'
                 },
+                form: {
+                    test_gridFilter: {
+                        registeredFields: {
+                            test_filter: {}
+                        }
+                    }
+                },
                 grid: {
                     test_grid: {
                         filter: {

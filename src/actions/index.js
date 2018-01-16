@@ -16,10 +16,20 @@ const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
         gridParams[name] = {};
     }
 
-    if (value !== null) {
-        gridParams[name][param] = value;
-    } else {
+    if (param === 'filter') {
+        const visibleFields = getState().form[name + 'Filter'].registeredFields;
+
+        value = Object.assign({},
+            ...Object.keys(value)
+                .filter(key => visibleFields.hasOwnProperty(key))
+                .map(key => ({[key]: value[key]}))
+        );
+    }
+
+    if (value === null || (typeof value === 'object' && Object.keys(value).length === 0)) {
         delete gridParams[name][param];
+    } else {
+        gridParams[name][param] = value;
     }
 
     if (Object.keys(gridParams[name]).length === 0) {
