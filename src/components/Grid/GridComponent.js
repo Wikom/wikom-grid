@@ -78,10 +78,11 @@ class GridComponent extends React.Component {
             activeSort={activeSort}
         />;
         const className = this.props.className || "table table-striped table-hover table-bordered table-condensed";
+        const boxClassName = this.props.boxClassName || "box";
 
         return (
             <div className="grid-view">
-                <div className="box">
+                <div className={boxClassName}>
                     <div className="box-body">
                         {actions}
                         {
