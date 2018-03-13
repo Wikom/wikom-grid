@@ -134,6 +134,18 @@ const gridReducer = (state = {}, action) => {
             return gridState;
         }
 
+        case types.SELECTION_CLEARED: {
+            const gridState = Object.assign({}, state);
+
+            if (!gridState[action.name]) {
+                gridState[action.name] = initialGridState();
+            }
+
+            gridState[action.name].selection = [];
+
+            return gridState;
+        }
+
         case types.EDIT_START: {
             const gridState = {...state};
 

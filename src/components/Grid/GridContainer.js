@@ -10,13 +10,17 @@ import {initializeGrid, destroyGrid, changeData} from '../../actions/index'
 import {PAGINATION_COUNT_FORMAT_SHORT} from '../Pagination'
 import paginationType from '../propTypes/pagination'
 
+const mapState = ({grid: gridState}, {grid}) => ({
+    selection: gridState[grid] && gridState[grid].selection || []
+});
+
 const mapDispatchToProps = dispatch => ({
     initializeGrid: grid => dispatch(initializeGrid(grid)),
     destroyGrid: grid => dispatch(destroyGrid(grid)),
     changeData: (grid, data) => dispatch(changeData(grid, data))
 });
 
-const Grid = connect(null, mapDispatchToProps)(GridComponent);
+const Grid = connect(mapState, mapDispatchToProps)(GridComponent);
 
 Grid.defaultProps = {
     pageSizes: [10, 20, 50],

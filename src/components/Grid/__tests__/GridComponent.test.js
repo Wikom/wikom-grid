@@ -167,6 +167,31 @@ describe('components', () => {
             expect(page.find('td').text()).toBe('Keine Ergebnisse vorhanden');
         });
 
+        it('should change selection', () => {
+            const page = mount(
+                <GridComponent
+                    isLoading={false}
+                    grid="test"
+                    initializeGrid={initialize}
+                    changeData={changeData}
+                    destroyGrid={destroyGrid}
+                    data={[{
+                        id: 1
+                    }]}
+                >
+                    <Columns>
+                        <Column name="ID" idx="id"/>
+                    </Columns>
+                </GridComponent>
+            );
+
+            page.setProps({
+                selection: [1]
+            });
+
+            expect(page.find('tr').at(1).hasClass('grid-row-selected')).toBe(true);
+        });
+
         it('should render a different Grid Component', () => {
             const page = mount(
                 <GridComponent

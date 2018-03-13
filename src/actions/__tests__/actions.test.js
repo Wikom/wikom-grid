@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import queryString from 'query-string'
 import {applyFilter, changePage, changePageSize, changeSort,
     initializeGrid, destroyGrid, initializeFilter, destroyFilter, changeData, changeSelection,
-    editStart, editEnd
+    editStart, editEnd, clearSelection
 } from '../'
 import * as types from '../actionTypes'
 import {LOCATION_CHANGE, CALL_HISTORY_METHOD} from 'react-router-redux'
@@ -259,6 +259,15 @@ describe('Grid actions', () => {
             };
 
             expect(changeData(name, data)).toEqual(expected);
+        });
+
+        it('should generate an action object to clear selection', () => {
+            const expected = {
+                type: types.SELECTION_CLEARED,
+                name
+            };
+
+            expect(clearSelection(name)).toEqual(expected);
         });
 
         it('should generate an action object to change selection', () => {

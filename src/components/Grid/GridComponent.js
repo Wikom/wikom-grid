@@ -35,6 +35,8 @@ class GridComponent extends React.Component {
             this.props.changeData(nextProps.grid, nextProps.data);
 
             this._rows = this.buildRows(nextProps);
+        } else if (JSON.stringify(this.props.selection) !== JSON.stringify(nextProps.selection)) {
+            this._rows = this.buildRows(nextProps);
         }
     }
 

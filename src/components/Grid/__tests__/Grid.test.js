@@ -18,7 +18,9 @@ function setupStore(storeData) {
 describe('components', () => {
     describe('Grid', () => {
         it('should render loading state ', () => {
-            const {mockStore} = setupStore({});
+            const {mockStore} = setupStore({
+                grid: {}
+            });
 
             const page = mount(<Grid store={mockStore} isLoading={true} grid="test"/>);
 
@@ -26,7 +28,9 @@ describe('components', () => {
         });
 
         it('display "no results"-message on empty data', () => {
-            const {mockStore} = setupStore({});
+            const {mockStore} = setupStore({
+                grid: {}
+            });
 
             const page = mount(
                 <Grid store={mockStore} isLoading={false} grid="test">
@@ -40,7 +44,9 @@ describe('components', () => {
         });
 
         it('three data entrys sould result in three tbody rows', () => {
-            const {mockStore} = setupStore({});
+            const {mockStore} = setupStore({
+                grid: {}
+            });
 
             const data = [
                 {test01: 'foo', test02: 'bar'},
@@ -63,7 +69,9 @@ describe('components', () => {
         });
 
         it('className for table?', () => {
-            const {mockStore} = setupStore({});
+            const {mockStore} = setupStore({
+                grid: {}
+            });
             const className = 'foobar';
 
             const page = mount(

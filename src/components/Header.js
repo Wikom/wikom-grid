@@ -13,7 +13,7 @@ const Header = ({grid, columns, activeSort, handleSort}) =>
                 const {name, className, tooltip, idx, ThComponent, sortable = true} = column.props;
 
                 if (ThComponent) {
-                    return <ThComponent grid={grid} key={key} idx={idx}/>;
+                    return <ThComponent grid={grid} name={name} key={key} idx={idx}/>;
                 }
 
                 const classNames = [];

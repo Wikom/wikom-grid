@@ -76,6 +76,11 @@ export const changeSelection = (name, target) => ({
     value: target.value
 });
 
+export const clearSelection = name => ({
+    type: types.SELECTION_CLEARED,
+    name
+});
+
 export const initializeFilter = (name, initialValues) => ({
     type: types.INITIALIZE_FILTER,
     name,

@@ -18,6 +18,8 @@ import * as gridActions from './actions'
 import * as paginationTypes from './components/Pagination'
 import * as FormComponents from './components/formComponents'
 
+const {changeSelection, clearSelection} = gridActions;
+
 export default Grid
 export {
     Grid,
@@ -34,5 +36,7 @@ export {
     gridReducer,
     gridActions,
     paginationTypes,
-    FormComponents
+    FormComponents,
+    changeSelection,
+    clearSelection
 }

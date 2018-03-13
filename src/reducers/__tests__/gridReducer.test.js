@@ -214,6 +214,29 @@ describe('grid reducer', () => {
         expect(reducer({}, changeDataAction)).toEqual(expectedGridState);
     });
 
+    it('should handle SELECTION_CLEARED', () => {
+        const changeSelectionAction = {
+            type: types.SELECTION_CLEARED,
+            name: gridName        };
+
+        const expectedGridState = Object.assign({}, initializedGridState);
+        expectedGridState[gridName].selection = [];
+
+        expect(reducer(initializedGridState, changeSelectionAction)).toEqual(expectedGridState);
+    });
+
+    it('should handle SELECTION_CLEARED with no grid data in store', () => {
+        const changeSelectionAction = {
+            type: types.SELECTION_CLEARED,
+            name: gridName
+        };
+
+        const expectedGridState = Object.assign({}, initializedGridState);
+        expectedGridState[gridName].selection = [];
+
+        expect(reducer({}, changeSelectionAction)).toEqual(expectedGridState);
+    });
+
     it('should handle SELECTION_CHANGED', () => {
         const changeSelectionAction = {
             type: types.SELECTION_CHANGED,
