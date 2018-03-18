@@ -5,7 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const BaseColumn = ({className, onClick, children}) => {
+const BaseColumn = ({className, onClick, children, cellWidth}) => {
     const tdProps = {onClick};
 
     switch (typeof className) {
@@ -21,7 +21,7 @@ const BaseColumn = ({className, onClick, children}) => {
 
     return (
         <td {...tdProps}>
-            {children}
+            { cellWidth ? (<div style={{'width': cellWidth}}>{children}</div>) : children }
         </td>
     );
 };
@@ -31,7 +31,8 @@ BaseColumn.propTypes = {
         PropTypes.string,
         PropTypes.object
     ]),
-    children: PropTypes.node
+    children: PropTypes.node,
+    cellWidth: PropTypes.string
 };
 
 export default BaseColumn;

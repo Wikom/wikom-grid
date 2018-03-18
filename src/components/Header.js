@@ -10,10 +10,10 @@ const Header = ({grid, columns, activeSort, handleSort}) =>
     <tr>
         {
             columns.map((column, key) => {
-                const {name, className, tooltip, idx, ThComponent, sortable = true} = column.props;
+                const {name, className, tooltip, idx, ThComponent, cellWidth = false, sortable = true} = column.props;
 
                 if (ThComponent) {
-                    return <ThComponent grid={grid} name={name} key={key} idx={idx}/>;
+                    return <ThComponent grid={grid} name={name} key={key} idx={idx} cellWidth={cellWidth} />;
                 }
 
                 const classNames = [];
@@ -44,8 +44,10 @@ const Header = ({grid, columns, activeSort, handleSort}) =>
                 }
 
                 thProps.className = classNames.join(' ');
-
-                return <th {...thProps}><span className="table-head-title">{withTooltip(tooltip)(name)}</span></th>;
+                let thInner = <span className="table-head-title">{withTooltip(tooltip)(name)}</span>;
+                return <th {...thProps}>
+                    { cellWidth ? (<div style={{'width': cellWidth}}>{thInner}</div>) : thInner }
+                </th>;
             })
         }
     </tr>;
