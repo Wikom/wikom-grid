@@ -73,7 +73,7 @@ class GridTable extends React.Component {
     }
 
     render() {
-        const {grid, pagination, handleSort, activeSort, actions, pageSizes, paginationAfterGrid, paginationCountFormat} = this.props;
+        const {grid, pagination, handleSort, activeSort, actions, pageSizes, paginationAfterGrid, paginationCountFormat, boxHeader} = this.props;
         const hasPagination = pagination && grid;
         const header = <Header
             grid={grid}
@@ -87,6 +87,7 @@ class GridTable extends React.Component {
         return (
             <div className="grid-view">
                 <div className={boxClassName}>
+                    {boxHeader || null}
                     <div className="box-body">
                         {actions}
                         {
