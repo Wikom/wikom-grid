@@ -17,7 +17,7 @@ const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
     }
 
     if (param === 'filter') {
-        const visibleFields = getState().form[name + 'Filter'].registeredFields;
+        const visibleFields = getState().form[name + 'Filter'].registeredFields || {};
 
         value = Object.assign({},
             ...Object.keys(value)
