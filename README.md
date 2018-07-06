@@ -41,7 +41,7 @@ Both form components, Form and SimpleForm [...]
 |---|---|---|
 | grid* | string | identifies form for state keys |
 | data* | array | data that will be displayed |
-| className | string | className for table-tag <br/> <br/>default:*"table table-striped table-hover table-bordered table-condensed"* |
+| tableClassName | string | className for table-tag <br/> <br/>default:*"table table-striped table-hover table-bordered table-condensed"* |
 
 ### ConnectedGrid
 

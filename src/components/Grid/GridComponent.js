@@ -79,7 +79,7 @@ class GridComponent extends React.Component {
             handleSort={handleSort}
             activeSort={activeSort}
         />;
-        const className = this.props.className || "table table-striped table-hover table-bordered table-condensed";
+        const tableClassName = this.props.tableClassName || "table table-striped table-hover table-bordered table-condensed";
         const boxClassName = this.props.boxClassName || "box";
 
         return (
@@ -98,7 +98,7 @@ class GridComponent extends React.Component {
                                 <div className="table-grid">
                                     <div className="table-responsive">
                                         <table
-                                            className={className}>
+                                            className={tableClassName}>
                                             <thead>
                                             {header}
                                             </thead>

@@ -127,7 +127,7 @@ describe('components', () => {
                 <GridComponent
                     isLoading={false}
                     grid="test"
-                    className={className}
+                    tableClassName={className}
                     initializeGrid={initialize}
                     changeData={changeData}
                     destroyGrid={destroyGrid}

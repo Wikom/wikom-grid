@@ -75,7 +75,7 @@ describe('components', () => {
             const className = 'foobar';
 
             const page = mount(
-                <Grid store={mockStore} isLoading={false} grid="test" className={className}>
+                <Grid store={mockStore} isLoading={false} grid="test" tableClassName={className}>
                     <Columns>
                         <Column name="Test 01" idx="test01"/>
                         <Column name="Test 02" idx="test02"/>
