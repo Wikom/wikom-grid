@@ -35,7 +35,8 @@ const mapStateToProps = (state, {grid, baseUrl}) => {
         }
 
         if (Object.keys(append).length > 0) {
-            url += '?' + queryString.stringify(append);
+            const seperator = url.indexOf('?') !== -1 ? '&' : '?';
+            url += seperator + queryString.stringify(append);
         }
     }
 
