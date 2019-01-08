@@ -21,6 +21,21 @@ describe('components', () => {
             expect(table.html()).toBe('<table><thead><tr><th class=""><span class="table-head-title">TEST</span></th></tr></thead></table>');
         });
 
+        it('should render a header row with fixed column width', () => {
+            const columns = [
+                <Column name="TEST" cellWidth={100}/>
+            ];
+            const table = mount(
+                <table>
+                    <thead>
+                    <Header columns={columns}/>
+                    </thead>
+                </table>
+            );
+
+            expect(table.find('th div').at(0).prop('style').width).toBe(100);
+        });
+
         it('should render a sortable header row with active asc sorting', () => {
             const columns = [
                 <Column

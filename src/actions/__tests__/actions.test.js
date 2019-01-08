@@ -98,6 +98,27 @@ describe('Grid actions', () => {
             checkStore('', 1, other_store);
         });
 
+        it('should should not filter if filter is not registered', () => {
+            const data = {
+                filter_1: 'FOO',
+                filter_2: 'BAR'
+            };
+            const other_store = mockStore({
+                routing: {
+                    location: {
+                        pathname: '/foo'
+                    }
+                },
+                form: {
+                    grid_nameFilter: {}
+                }
+            });
+
+            other_store.dispatch(applyFilter(data, name));
+
+            checkStore('', 1, other_store);
+        });
+
         test('should change page number in pagination', () => {
             const expected = queryString.stringify({
                 grid: JSON.stringify({

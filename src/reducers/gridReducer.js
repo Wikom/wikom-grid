@@ -9,19 +9,21 @@ import queryString from 'query-string'
 import * as types from '../actions/actionTypes'
 import * as submitStatus from '../constants'
 
+const initialEditState = () => ({
+    rowId: null,
+    colId: null,
+    status: {},
+    values: {},
+    tmp: {},
+});
+
 const initialGridState = () => ({
     data: [],
     filter: {},
     pagination: {},
     selection: [],
     sort: null,
-    edit: {
-        rowId: null,
-        colId: null,
-        status: {},
-        values: {},
-        tmp: {}
-    }
+    edit: initialEditState(),
 });
 
 const defaultFilter = {};
@@ -107,6 +109,7 @@ const gridReducer = (state = {}, action) => {
             }
 
             gridState[action.name].data = action.data;
+            gridState[action.name].edit = initialEditState();
 
             return gridState;
         }
