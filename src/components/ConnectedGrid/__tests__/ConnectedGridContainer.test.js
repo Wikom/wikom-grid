@@ -103,6 +103,46 @@ describe('components', () => {
             expect(gridProp(grid, 'url')).toBe(expectedUrl);
         });
 
+        it('should append grid params with amp if grid url contains question mark', () => {
+            const {mockStore} = setup({
+                grid: {
+                    [gridName]: {
+                        filter: {
+                            foo: 'bar'
+                        },
+                        pagination: {
+                            pageSize: 10,
+                            currentPage: 1
+                        },
+                        sort: 'foo'
+                    }
+                },
+            });
+            const otherBaseUrl = baseUrl + '?foo=bar';
+
+            const grid = shallow(
+                <ConnectedGridContainer
+                    store={mockStore}
+                    grid={gridName}
+                    baseUrl={otherBaseUrl}
+                    force={false}
+                >
+                    <div>INNER</div>
+                </ConnectedGridContainer>
+            );
+
+            const expectedUrl = otherBaseUrl + '&' +
+                queryString.stringify({
+                    'filter[foo]': 'bar',
+                    'per-page': 10,
+                    page: 1,
+                    sort: 'foo'
+                });
+
+            expect(gridProp(grid, 'grid')).toBe(gridName);
+            expect(gridProp(grid, 'url')).toBe(expectedUrl);
+        });
+
         it('should dispatch a changeSort action', () => {
             const {mockStore} = setup({
                 grid: {

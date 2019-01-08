@@ -51,5 +51,21 @@ describe('components', () => {
 
             expect(table.find('td').hasClass('testClass')).toBe(false);
         });
+
+        it('should render a base column with fixed width', () => {
+            const table = mount(
+                <table>
+                    <tbody>
+                    <tr>
+                        <BaseColumn className="testClass" cellWidth={100}>
+                            TEST
+                        </BaseColumn>
+                    </tr>
+                    </tbody>
+                </table>
+            );
+
+            expect(table.find('td div').at(0).prop('style').width).toBe(100);
+        });
     });
 });

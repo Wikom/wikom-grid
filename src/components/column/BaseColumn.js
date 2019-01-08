@@ -32,7 +32,10 @@ BaseColumn.propTypes = {
         PropTypes.object
     ]),
     children: PropTypes.node,
-    cellWidth: PropTypes.string
+    cellWidth: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
 };
 
 export default BaseColumn;
