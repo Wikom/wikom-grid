@@ -5,6 +5,7 @@
 import {replace} from 'react-router-redux'
 import queryString from 'query-string'
 import * as types from './actionTypes'
+import {submit} from 'wikom-data';
 
 const changeGridParam = ({name, param, value}) => (dispatch, getState) => {
     const location = getState().routing.location;
@@ -108,4 +109,15 @@ export const editEnd = (name, rowId, colId) => (dispatch, getState) => {
     };
 
     setTimeout(editEndFn, 100);
+};
+
+export const handleSubmit = (values, grid, rowData, editRoute) => (dispatch, getState) => {
+    const allForms = getState().form;
+    const editFormValues = Object.keys(allForms)
+        .filter(formName => formName.indexOf('gridedit_' + grid) === 0)
+        .map(formName => allForms[formName].values)
+        .reduce((acc, cur) => ({...acc, ...cur}), {});
+    const data = {...rowData, ...editFormValues, ...values};
+
+    return dispatch(submit({url: editRoute, data}));
 };

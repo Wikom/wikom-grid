@@ -1,10 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import findInObject from 'find-in-object'
-import {submit, actions} from 'wikom-data'
-import {SUBMIT_STATUS_FAILURE, SUBMIT_STATUS_PENDING, SUBMIT_STATUS_SUCCESS} from "../../../constants";
-import EditComponent from "./EditComponent";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import findInObject from 'find-in-object';
+import {actions} from 'wikom-data';
+import {SUBMIT_STATUS_FAILURE, SUBMIT_STATUS_PENDING, SUBMIT_STATUS_SUCCESS} from '../../../constants';
+import EditComponent from './EditComponent';
+import {handleSubmit} from '../../../actions';
 
 const EditContainer = ({
                            grid,
@@ -32,8 +33,7 @@ const EditContainer = ({
         grid,
         idx,
         initialValues: {[idx]: findInObject(idx, rowData)},
-        onSubmit: (values, dispatch, props) =>
-            dispatch(submit({url: editRoute, data: {...rowData, ...values}})),
+        onSubmit: (values, dispatch, props) => dispatch(handleSubmit(values, grid, rowData, editRoute)),
         onSubmitFail: (errors, dispatch, submitError, props) => {
             if (submitError.status === 422) {
                 const error = {
@@ -79,4 +79,4 @@ EditContainer.propTypes = {
     onFocus: PropTypes.func.isRequired
 };
 
-export default EditContainer
+export default EditContainer;
