@@ -20,15 +20,13 @@ const mapState = ({grid}, {grid: gridname, rowId, colId, rowData, idx}) => ({
     changedRowData: grid[gridname].edit
         && grid[gridname].edit.values
         && grid[gridname].edit.values[rowId]
-        && grid[gridname].edit.values[rowId][colId]
+        && grid[gridname].edit.values[rowId].hasOwnProperty(colId)
         && {...rowData, [idx]: grid[gridname].edit.values[rowId][colId]}
         || null,
     hasValueChanged: grid[gridname].edit
         && grid[gridname].edit.values
         && grid[gridname].edit.values[rowId]
-        && grid[gridname].edit.values[rowId][colId]
-        && rowData[idx]
-        && grid[gridname].edit.values[rowId][colId] !== rowData[idx]
+        && grid[gridname].edit.values[rowId].hasOwnProperty(colId)
         || false
 });
 

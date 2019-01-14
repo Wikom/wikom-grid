@@ -61,6 +61,7 @@ module.exports = {
         "react-router-dom": "react-router-dom",
         "react-router-redux": "react-router-redux",
         "react-datetime": "react-datetime",
+        "react-number-format": "react-number-format",
         "redux": "redux",
         "redux-form": "redux-form",
         "wikom-data": "wikom-data",

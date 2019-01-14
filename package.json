@@ -1,6 +1,6 @@
 {
   "name": "wikom-grid",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "main": "lib/index.js",
   "module": "src/index.js",
   "repository": "git@github.com:Wikom/wikom-grid.git",
@@ -19,6 +19,7 @@
     "react-conditional": "https://github.com/Wikom/react-conditional.git",
     "react-datepicker": "^1.0.4",
     "react-loading": "https://github.com/Wikom/react-loading.git",
+    "react-number-format": "^4.0.6",
     "react-onclickoutside": "^6.7.0",
     "react-pager": "^1.2.1",
     "react-symbol": "https://github.com/Wikom/react-symbol.git",
