@@ -1,5 +1,5 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import {shallow, mount} from 'enzyme'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import ConnectedGridComponent from '../ConnectedGridComponent'
@@ -24,20 +24,34 @@ describe('components', () => {
 
         it('should connect a Connected grid Container to the store', () => {
             const {mockStore} = setup({
+                queries: {},
                 grid: {
                     [gridName]: {}
                 },
             });
 
-            const grid = shallow(
+            /**
+             * shallow mounting von "connect"-Komponenten mit React 16.8 zur Zeit nicht möglich
+             * @todo Nach update der Test-Umgebung zurück ändern!
+             */
+
+            // const grid = shallow(
+            //     <ConnectedGridContainer
+            //         store={mockStore}
+            //         grid={gridName}
+            //         baseUrl={baseUrl}
+            //         force={false}
+            //     >
+            //         <div>INNER</div>
+            //     </ConnectedGridContainer>
+            // );
+            const grid = mount(
                 <ConnectedGridContainer
                     store={mockStore}
                     grid={gridName}
                     baseUrl={baseUrl}
                     force={false}
-                >
-                    <div>INNER</div>
-                </ConnectedGridContainer>
+                />
             );
 
             expect(gridProp(grid, 'grid')).toBe(gridName);
@@ -46,18 +60,27 @@ describe('components', () => {
 
         it('should connect a Connected grid Container to the store with no grid data present', () => {
             const {mockStore} = setup({
+                queries: {},
                 grid: {},
             });
 
-            const grid = shallow(
+            // const grid = shallow(
+            //     <ConnectedGridContainer
+            //         store={mockStore}
+            //         grid={gridName}
+            //         baseUrl={baseUrl}
+            //         force={false}
+            //     >
+            //         <div>INNER</div>
+            //     </ConnectedGridContainer>
+            // );
+            const grid = mount(
                 <ConnectedGridContainer
                     store={mockStore}
                     grid={gridName}
                     baseUrl={baseUrl}
                     force={false}
-                >
-                    <div>INNER</div>
-                </ConnectedGridContainer>
+                />
             );
 
             expect(gridProp(grid, 'grid')).toBe(gridName);
@@ -66,6 +89,7 @@ describe('components', () => {
 
         it('should use filter, pagination and sorting from store for grid url', () => {
             const {mockStore} = setup({
+                queries: {},
                 grid: {
                     [gridName]: {
                         filter: {
@@ -80,15 +104,23 @@ describe('components', () => {
                 },
             });
 
-            const grid = shallow(
+            // const grid = shallow(
+            //     <ConnectedGridContainer
+            //         store={mockStore}
+            //         grid={gridName}
+            //         baseUrl={baseUrl}
+            //         force={false}
+            //     >
+            //         <div>INNER</div>
+            //     </ConnectedGridContainer>
+            // );
+            const grid = mount(
                 <ConnectedGridContainer
                     store={mockStore}
                     grid={gridName}
                     baseUrl={baseUrl}
                     force={false}
-                >
-                    <div>INNER</div>
-                </ConnectedGridContainer>
+                />
             );
 
             const expectedUrl = baseUrl + '?' +
@@ -105,6 +137,7 @@ describe('components', () => {
 
         it('should append grid params with amp if grid url contains question mark', () => {
             const {mockStore} = setup({
+                queries: {},
                 grid: {
                     [gridName]: {
                         filter: {
@@ -120,15 +153,23 @@ describe('components', () => {
             });
             const otherBaseUrl = baseUrl + '?foo=bar';
 
-            const grid = shallow(
+            // const grid = shallow(
+            //     <ConnectedGridContainer
+            //         store={mockStore}
+            //         grid={gridName}
+            //         baseUrl={otherBaseUrl}
+            //         force={false}
+            //     >
+            //         <div>INNER</div>
+            //     </ConnectedGridContainer>
+            // );
+            const grid = mount(
                 <ConnectedGridContainer
                     store={mockStore}
                     grid={gridName}
                     baseUrl={otherBaseUrl}
                     force={false}
-                >
-                    <div>INNER</div>
-                </ConnectedGridContainer>
+                />
             );
 
             const expectedUrl = otherBaseUrl + '&' +
@@ -157,20 +198,29 @@ describe('components', () => {
                         sort: 'foo'
                     }
                 },
+                queries: {},
                 routing: {
-                    location: 'http://www.foo.bar'
+                    location: 'http://localhost'
                 }
             });
 
-            const grid = shallow(
+            // const grid = shallow(
+            //     <ConnectedGridContainer
+            //         store={mockStore}
+            //         grid={gridName}
+            //         baseUrl={baseUrl}
+            //         force={false}
+            //     >
+            //         <div>INNER</div>
+            //     </ConnectedGridContainer>
+            // );
+            const grid = mount(
                 <ConnectedGridContainer
                     store={mockStore}
                     grid={gridName}
                     baseUrl={baseUrl}
                     force={false}
-                >
-                    <div>INNER</div>
-                </ConnectedGridContainer>
+                />
             );
 
             gridProp(grid, 'handleSort')('foo', false);
@@ -183,9 +233,9 @@ describe('components', () => {
                 })
             });
 
-            expect(mockStore.getActions().length).toBe(1);
-            expect(mockStore.getActions()[0].type).toBe(CALL_HISTORY_METHOD);
-            expect(mockStore.getActions()[0].payload.args[0].search).toBe(expectedSearchString);
+            expect(mockStore.getActions().length).toBe(2);
+            expect(mockStore.getActions()[1].type).toBe(CALL_HISTORY_METHOD);
+            expect(mockStore.getActions()[1].payload.args[0].search).toBe(expectedSearchString);
         });
 
     });
