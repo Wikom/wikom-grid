@@ -3,7 +3,6 @@
  */
 
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -15,37 +14,19 @@ module.exports = {
         umdNamedDefine: true
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                exclude: [
-                    /node_modules/,
-                    "**/__tests__/*"
-                ],
-                loader: 'babel-loader'
+                exclude: /node_modules/,
+                use: 'babel-loader'
             },
             {
                 test: /\.css$/,
-                loaders: ["style", "css"]
+                use: ["style-loader", "css-loader"]
             }
         ]
     },
     devtool: 'source-map',
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                drop_console: true
-            },
-            output: {
-                comments: false
-            }
-        })
-    ],
     externals: {
         "find-in-object": "find-in-object",
         "moment": "moment",

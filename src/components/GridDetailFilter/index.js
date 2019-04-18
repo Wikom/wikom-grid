@@ -2,9 +2,11 @@ import React from 'react'
 import GridFilter from '../GridFilter'
 import GridFilterDetailTemplate from './GridFilterDetailTemplate'
 
-class GridDetailFilter extends GridFilter {
-
-}
+const GridDetailFilter = ({children, ...props}) => (
+    <GridFilter {...props}>
+        {children}
+    </GridFilter>
+);
 
 GridDetailFilter.defaultProps = {
     Template: GridFilterDetailTemplate

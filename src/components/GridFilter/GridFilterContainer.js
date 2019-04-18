@@ -9,7 +9,7 @@ const mapStateToProps = ({grid}, {grid: gridname, initialValues, children}) => (
     form: gridname + 'Filter',
     initialValues: Object.assign({}, initialValues || {}, grid[gridname] && grid[gridname].filter),
     children: React.Children.map(children, child =>
-        React.isValidElement(child) && typeof child.type === 'function'
+        React.isValidElement(child) && typeof child.type === 'object'
             ? React.cloneElement(child, {grid: gridname})
             : child
     )
