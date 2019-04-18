@@ -21,7 +21,7 @@ GridFilterComponent.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     children: PropTypes.node,
-    Template: PropTypes.oneOfType(PropTypes.object, PropTypes.func)
+    Template: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 };
 
 export default GridFilterComponent
