@@ -25,7 +25,7 @@ const createActions = (children, rowData, idx) => {
                 idx
             })
         }
-        if (React.isValidElement(child) && typeof child.type === 'function') {
+        if (React.isValidElement(child) && (typeof child.type === 'function' || typeof child.type === 'object')) {
             return React.cloneElement(child, {
                 rowData
             })
