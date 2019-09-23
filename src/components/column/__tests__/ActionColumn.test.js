@@ -46,7 +46,7 @@ describe('components', () => {
                 </Provider>
             );
 
-            expect(table.find('td').find('a[href="http://localhost/details/1"]').exists()).toBe(true);
+            expect(table.find('td').find('Link').prop('to')).toBe('http://localhost/details/1');
 
             table.find('td').find('.fa-trash').simulate('click');
 

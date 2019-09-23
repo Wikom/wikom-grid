@@ -32,7 +32,7 @@ describe('components', () => {
                 </Provider>
             );
 
-            expect(gridFilter.html()).toBe(null);
+            expect(gridFilter.html()).toBe('');
         });
 
         it('should render a grid filter', () => {
