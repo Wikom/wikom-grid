@@ -5,8 +5,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import Symbol from 'react-symbol'
-import Conditional from 'react-conditional'
+import Symbol from '@wikom/react-symbol'
+import Conditional from '@wikom/react-conditional'
 
 const GridLink = ({symbol, to}) =>
     <Link to={to}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import {shallow} from 'enzyme'
 import ConnectedGridComponent from "../ConnectedGridComponent";
-import DataProvider from 'wikom-data'
+import DataProvider from '@wikom/wikom-data'
 
 describe('components', () => {
     describe('ConnectedGridComponent', () => {

@@ -5,7 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BaseColumn from './BaseColumn'
-import findInObject from 'find-in-object'
+import findInObject from '@wikom/find-in-object'
 
 const countValues = (data) => data instanceof Array ? data.length : 0;
 

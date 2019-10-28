@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import findInObject from 'find-in-object'
+import findInObject from '@wikom/find-in-object'
 import BaseColumn from '../BaseColumn'
 
 const CheckboxColumn = ({rowData, idx, checked, onChange, className, ...rest}) =>

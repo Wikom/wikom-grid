@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import findInObject from 'find-in-object';
-import {actions} from 'wikom-data';
+import findInObject from '@wikom/find-in-object';
+import {actions} from '@wikom/wikom-data';
 import {SUBMIT_STATUS_FAILURE, SUBMIT_STATUS_PENDING, SUBMIT_STATUS_SUCCESS} from '../../../constants';
 import EditComponent from './EditComponent';
 import {handleSubmit} from '../../../actions';

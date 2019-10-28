@@ -5,7 +5,7 @@
 import React from 'react'
 import {mount, shallow} from 'enzyme'
 import BooleanColumn from '../BooleanColumn'
-import Symbol from 'react-symbol'
+import Symbol from '@wikom/react-symbol'
 
 const trueString = 'ja';
 const falseString = 'nein';

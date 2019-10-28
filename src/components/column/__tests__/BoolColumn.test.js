@@ -5,7 +5,7 @@
 import React from 'react'
 import {mount} from 'enzyme'
 import BoolColumn from '../BoolColumn'
-import Symbol from 'react-symbol'
+import Symbol from '@wikom/react-symbol'
 
 const trueString = 'ja';
 const falseString = 'nein';

@@ -4,8 +4,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import findInObject from 'find-in-object'
-import Symbol from 'react-symbol'
+import findInObject from '@wikom/find-in-object'
+import Symbol from '@wikom/react-symbol'
 import BaseColumn from './BaseColumn'
 
 const SymbolColumn = ({name, rowData, idx, symbols, ...rest}) => {
