@@ -4,8 +4,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import Symbol from 'react-symbol'
-import Conditional from 'react-conditional'
+import Symbol from '@wikom/react-symbol'
+import Conditional from '@wikom/react-conditional'
 
 const GridAction = ({symbol, action}) =>
     <a onClick={action}>

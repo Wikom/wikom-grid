@@ -4,7 +4,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import withTooltip from 'with-tooltip'
+import withTooltip from '@wikom/with-tooltip'
 
 const Header = ({grid, columns, activeSort, handleSort}) =>
     <tr>

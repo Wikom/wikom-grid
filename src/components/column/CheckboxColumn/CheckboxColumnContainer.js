@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import CheckboxColumnComponent from './CheckboxColumnComponent'
 import CheckboxHeaderContainer from './CheckboxHeaderContainer'
 
-import findInObject from 'find-in-object'
+import findInObject from '@wikom/find-in-object'
 import {changeSelection} from '../../../actions/index'
 
 const mapStateToProps = (state, {grid, idx, rowData}) => ({

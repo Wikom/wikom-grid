@@ -1,5 +1,5 @@
 import React from 'react'
-import Symbol from 'react-symbol'
+import Symbol from '@wikom/react-symbol'
 
 const GridFilterDefaultTemplate = ({clearFilter, children}) =>
     <div className="box box-default box-solid grid-search">

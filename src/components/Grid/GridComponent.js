@@ -7,7 +7,7 @@ import Columns from '../Columns'
 import Row from '../Row'
 import Header from '../Header'
 import FullRow from '../FullRow'
-import Loading from 'react-loading'
+import Loading from '@wikom/react-loading'
 import Pagination from '../Pagination'
 
 class GridComponent extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react'
-import DataProvider from 'wikom-data'
+import DataProvider from '@wikom/wikom-data'
 
 const ConnectedGridComponent = ({grid, url, force, children, ...rest}) =>
     <DataProvider name={grid} grid={grid} url={url} force={force} {...rest}>

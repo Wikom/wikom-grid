@@ -4,7 +4,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import findInObject from 'find-in-object'
+import findInObject from '@wikom/find-in-object'
 import GridAction from '../GridAction'
 import GridLink from '../GridLink'
 import BaseColumn from './BaseColumn'
