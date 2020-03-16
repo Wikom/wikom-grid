@@ -1,6 +1,6 @@
 {
   "name": "@wikom/wikom-grid",
-  "version": "1.23.2",
+  "version": "1.23.3",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "repository": {
