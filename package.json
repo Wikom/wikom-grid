@@ -100,5 +100,8 @@
   "homepage": "https://github.com/Wikom/wikom-grid#readme",
   "directories": {
     "lib": "lib"
+  },
+  "resolutions": {
+    "**/mkdirp/minimist": "0.2.1"
   }
 }
